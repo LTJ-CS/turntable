@@ -16,13 +16,19 @@ typedef uint8_t ULONG8;
 
 class CDesOperate{
 private:
-    	ULONG32 m_arrOutKey[16][2];
-        ULONG32 m_arrBufKey[2];
+    //recursive key 16
+	ULONG32 m_arrOutKey[16][2];
+    //initial key
+    ULONG32 m_arrBufKey[2];
 
-        INT32 HandleData(ULONG32 *left, ULONG8 choice);
-        INT32 MakeData(ULONG32 *left, ULONG32 *right, ULONG32 number);
-        INT32 MakeKey(ULONG32 *keyleft, ULONG32 *keyright, ULONG32 number);
-        INT32 MakeFirstKey(ULONG32 *keyP);
+    //execute whole action
+    INT32 HandleData(ULONG32 *left, ULONG8 choice);
+    //execute 16 round without IP
+    INT32 MakeData(ULONG32 *left, ULONG32 *right, ULONG32 number);
+    //generate 1 recursive key
+    INT32 MakeKey(ULONG32 *keyleft, ULONG32 *keyright, ULONG32 number);
+    //generate 16 recursive key
+    INT32 MakeFirstKey(ULONG32 *keyP);
 
 public:
     CDesOperate();

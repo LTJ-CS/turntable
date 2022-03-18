@@ -8,8 +8,10 @@ char strDecryBuffer[BUFFERSIZE];
 
 void SecretChat(int nSock, char *pRemoteName, char *pKey){
 
-        CDesOperate cDes;
-        int klength = strlen(pKey);
+    //cout << pRemoteName << endl;
+    CDesOperate cDes;
+    //cout << pKey << endl;
+    int klength = strlen(pKey);
     if(klength != 8){
         printf("Key length error\n");
         return;
@@ -17,7 +19,8 @@ void SecretChat(int nSock, char *pRemoteName, char *pKey){
 
     pid_t nPid;
     nPid = fork();
-        if(nPid != 0){
+    //cout << nPid << endl;
+    if(nPid != 0){
         while(1){
             
             bzero(&strSocketBuffer, BUFFERSIZE);
@@ -28,7 +31,8 @@ void SecretChat(int nSock, char *pRemoteName, char *pKey){
                 break;
             }
             else{
-                                
+                //cout << "come on\n" << endl;
+                
                 int nLen = BUFFERSIZE;
                 cDes.Decry(strSocketBuffer,BUFFERSIZE,strDecryBuffer,nLen,pKey,8);
                 strDecryBuffer[BUFFERSIZE-1]=0;
@@ -49,14 +53,18 @@ void SecretChat(int nSock, char *pRemoteName, char *pKey){
             bzero(&strStdinBuffer, BUFFERSIZE);
             while(strStdinBuffer[0]==0)
             {
-                                if (fgets(strStdinBuffer, BUFFERSIZE, stdin) == NULL)
+                //cout << "here?" << endl;
+                if (fgets(strStdinBuffer, BUFFERSIZE, stdin) == NULL)
                 {
-                                        continue;
+                    //printf("say something");
+                    continue;
                 }
-                                int nLen = BUFFERSIZE;
+                //cout << "here?" << endl;
+                int nLen = BUFFERSIZE;
                 
                 cDes.Encry(strStdinBuffer,BUFFERSIZE,strEncryBuffer,nLen,pKey,8);
-                                if(send(nSock, strEncryBuffer, BUFFERSIZE,0)!=BUFFERSIZE)
+                //cout << "here" << endl;
+                if(send(nSock, strEncryBuffer, BUFFERSIZE,0)!=BUFFERSIZE)
                 {
                     perror("send");
                 }

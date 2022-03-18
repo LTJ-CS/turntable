@@ -408,10 +408,10 @@ INT32 CDesOperate::MakeFirstKey(ULONG32 *keyP){
     memset((uint8_t*)m_arrOutKey,0,sizeof(m_arrOutKey));
     int  j=0;
     for(j=0;j<28;j++)
-    {            if(keyleft[j]>32)
-        {       if(pTempKey[1]&pc_by_bit[keyleft[j]-1])
-            {          pFirstKey[0]|=pc_by_bit[j];                                                                                 }                                                                                                                         
-        }                                                                                                                       
+    {                                                                                                                if(keyleft[j]>32)
+        {                                                                                                               if(pTempKey[1]&pc_by_bit[keyleft[j]-1])
+            {                                                                pFirstKey[0]|=pc_by_bit[j];                                                                                 }                                                                                                                         //通过与上0x80000000(1000 0000 0000 0000...)等只有一bit为1的数即可判断
+        }                                                                                                                          //再将相应的位 置1通过或上0x80000000(1000 0000 0000 0000...)等只有一bit为1的数即可
         else
         {
             if(pTempKey[0]&pc_by_bit[keyleft[j]-1])
@@ -420,7 +420,7 @@ INT32 CDesOperate::MakeFirstKey(ULONG32 *keyP){
             }
         }
         if(keyright[j]>32)
-        {    if(pTempKey[1]&pc_by_bit[keyright[j]-1])
+        {                                                                                                if(pTempKey[1]&pc_by_bit[keyright[j]-1])
             {
                 pFirstKey[1]|=pc_by_bit[j];
             }

@@ -6,7 +6,7 @@ int main(){
     cout << "Client or Server?" << endl;
     char choose;
     cin >> choose;
-    char keyO[] = "lutianjian";
+    char keyO[] = "benbenmi";
     if(choose == 's'){
         int nListenSocket,nAcceptSocket;
         struct sockaddr_in sLocalAddr, sRemoteAddr;
@@ -31,7 +31,7 @@ int main(){
         nAcceptSocket = accept(nListenSocket, (struct sockaddr*)&sRemoteAddr, &nLength);
         close(nListenSocket);
         printf("server: got connection from %s, port %d, socket %d\n",inet_ntoa(sRemoteAddr.sin_addr), ntohs(sRemoteAddr.sin_port), nAcceptSocket);
-        SecretChat(nAcceptSocket, inet_ntoa(sRemoteAddr.sin_addr), "lutianjian");
+        SecretChat(nAcceptSocket, inet_ntoa(sRemoteAddr.sin_addr), "benbenmi");
         close(nAcceptSocket);
     }
     else if(choose == 'c'){
@@ -54,7 +54,7 @@ int main(){
             exit(errno);
         }else{
             printf("Connect Success! \nBegin to chat...\n");
-            SecretChat(nConnectSocket, strIPAddr, "lutianjian");
+            SecretChat(nConnectSocket, strIPAddr, "benbenmi");
         }
         close(nConnectSocket);
     }else{
