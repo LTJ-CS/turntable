@@ -1,0 +1,20 @@
+[
+  {
+    "PlayerEnergyLimit": 110,
+    "PlayerEnergyRecoverInterval": 120,
+    "PlayerInitEnergy": 240,
+    "PlayerInitGold": 500,
+    "ActivityEnergySupplyRewards": [
+      {
+        "id": 1,
+        "count": 25
+      }
+    ],
+    "ActivityGoldSupplyRewards": [
+      {
+        "id": 2,
+        "count": 50
+      }
+    ]
+  }
+]

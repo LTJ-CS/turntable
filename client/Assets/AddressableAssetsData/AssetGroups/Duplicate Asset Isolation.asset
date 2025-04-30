@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Duplicate Asset Isolation
+  m_EditorClassIdentifier: 
+  m_GroupName: Duplicate Asset Isolation
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 8d1b58c3e32844f96bd5e992036354e2
+  m_SerializeEntries:
+  - m_GUID: 0ed935cf7c0ae4374a0568cf61ee6bab
+    m_Address: Assets/GameRes/Runtime/UI/UserAuthorization/Sprites/Atlas1/cadpa.png
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e8245019faeb8c43b75f9ca3ac8ee34
+    m_Address: Assets/Spine/Runtime/spine-unity/Materials/SkeletonGraphic-PMATexture/SkeletonGraphicAdditive.mat
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b5f3a3dfca7044dc9f20aef9fd2ee47
+    m_Address: Assets/GameArt/Fonts/TMPChineseFont SDF Outline 1.mat
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68e6db2ebdc24f95958faec2be5558d6
+    m_Address: Assets/ThirdParty/TextMesh Pro/Shaders/TMP_SDF.shader
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7de845a312a284676a6291793daae607
+    m_Address: Assets/GameArt/Fonts/TMPChineseFont SDF.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1e4ab34b07f81e4e94f0d241c416669
+    m_Address: Assets/Spine/Runtime/spine-unity/Shaders/SkeletonGraphic/Spine-SkeletonGraphic-Additive.shader
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b66cf7a186d13054989b33a5c90044e4
+    m_Address: Assets/Spine/Runtime/spine-unity/Materials/SkeletonGraphic-PMATexture/SkeletonGraphicDefault.mat
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bab24c479f34eec45be6ea8595891569
+    m_Address: Assets/Spine/Runtime/spine-unity/Materials/SkeletonGraphic-PMATexture/SkeletonGraphicScreen.mat
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c61244023592f95479fddd71b5067683
+    m_Address: Assets/Spine/Runtime/spine-unity/Shaders/SkeletonGraphic/Spine-SkeletonGraphic-Screen.shader
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cfbf95ed0fe6c554c8c2ee6c8325937c
+    m_Address: Assets/Spine/Runtime/spine-unity/Shaders/SkeletonGraphic/Spine-SkeletonGraphic-Multiply.shader
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7a87849e9ffe4329b29924e49ea48b2
+    m_Address: Assets/GameArt/Fonts/TMPChineseFont.ttf
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e74a1f8978a7da348a721508d0d58834
+    m_Address: Assets/Spine/Runtime/spine-unity/Materials/SkeletonGraphic-PMATexture/SkeletonGraphicMultiply.mat
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa95b0fb6983c0f40a152e6f9aa82bfb
+    m_Address: Assets/Spine/Runtime/spine-unity/Shaders/SkeletonGraphic/Spine-SkeletonGraphic.shader
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe393ace9b354375a9cb14cdbbc28be4
+    m_Address: Assets/ThirdParty/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 86fa04b6e55294cac8e1ef73afabf27a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 77adc964364b440228b5143343ae2f18, type: 2}
+    - {fileID: 11400000, guid: 39670651d5380427994ba146a22db30a, type: 2}

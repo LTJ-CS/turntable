@@ -22,3 +22,5 @@ shared/bin.meta
 shared/obj.meta
 client/Assets/FR2_Cache.asset
 client/Assets/FR2_Cache.asset.meta
+client/Assets/FindReference2
+common-shared/.artifacts

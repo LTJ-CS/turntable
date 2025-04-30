@@ -1,0 +1,818 @@
+[
+  {
+    "id": 1,
+    "previousId": 0,
+    "chapter": 1,
+    "order": 1,
+    "score": [
+      30000,
+      330000,
+      1040000,
+      2200000,
+      3470000
+    ],
+    "name": "整装出发",
+    "score_id": 0,
+    "souvenir": [
+      0
+    ],
+    "unlockCost": [
+      {
+        "id": 2,
+        "count": 0
+      }
+    ],
+    "enterCost": [
+      {
+        "id": 1,
+        "count": 15
+      }
+    ],
+    "dropReward": [
+      {
+        "id": 3001,
+        "count": 1,
+        "weight": 5000
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "previousId": 1,
+    "chapter": 1,
+    "order": 2,
+    "score": [
+      30000,
+      330000,
+      1040000,
+      2200000,
+      3470000
+    ],
+    "name": "远行车站",
+    "score_id": 0,
+    "souvenir": [
+      0,
+      2
+    ],
+    "unlockCost": [
+      {
+        "id": 2,
+        "count": 370
+      }
+    ],
+    "enterCost": [
+      {
+        "id": 1,
+        "count": 15
+      }
+    ],
+    "dropReward": [
+      {
+        "id": 3001,
+        "count": 1,
+        "weight": 5000
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "previousId": 2,
+    "chapter": 1,
+    "order": 3,
+    "score": [
+      30000,
+      330000,
+      1040000,
+      2200000,
+      3470000
+    ],
+    "name": "露营场地",
+    "score_id": 0,
+    "souvenir": [
+      0,
+      3
+    ],
+    "unlockCost": [
+      {
+        "id": 2,
+        "count": 370
+      }
+    ],
+    "enterCost": [
+      {
+        "id": 1,
+        "count": 15
+      }
+    ],
+    "dropReward": [
+      {
+        "id": 3001,
+        "count": 1,
+        "weight": 5000
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "previousId": 3,
+    "chapter": 1,
+    "order": 4,
+    "score": [
+      186000,
+      590000,
+      1300000,
+      2540000,
+      4150000
+    ],
+    "name": "登山栈道",
+    "score_id": 0,
+    "souvenir": [
+      0,
+      3
+    ],
+    "unlockCost": [
+      {
+        "id": 2,
+        "count": 370
+      }
+    ],
+    "enterCost": [
+      {
+        "id": 1,
+        "count": 15
+      }
+    ],
+    "dropReward": [
+      {
+        "id": 3001,
+        "count": 1,
+        "weight": 5000
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "previousId": 4,
+    "chapter": 1,
+    "order": 5,
+    "score": [
+      186000,
+      590000,
+      1300000,
+      2540000,
+      4150000
+    ],
+    "name": "露天温泉",
+    "score_id": 0,
+    "souvenir": [
+      0,
+      3
+    ],
+    "unlockCost": [
+      {
+        "id": 2,
+        "count": 950
+      }
+    ],
+    "enterCost": [
+      {
+        "id": 1,
+        "count": 15
+      }
+    ],
+    "dropReward": [
+      {
+        "id": 3001,
+        "count": 1,
+        "weight": 5000
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "previousId": 5,
+    "chapter": 2,
+    "order": 1,
+    "score": [
+      265000,
+      950000,
+      2700000,
+      5100000,
+      7240000
+    ],
+    "name": "民宿小院",
+    "score_id": 0,
+    "souvenir": [
+      0,
+      3
+    ],
+    "unlockCost": [
+      {
+        "id": 2,
+        "count": 570
+      }
+    ],
+    "enterCost": [
+      {
+        "id": 1,
+        "count": 15
+      }
+    ],
+    "dropReward": [
+      {
+        "id": 3001,
+        "count": 1,
+        "weight": 5000
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "previousId": 6,
+    "chapter": 2,
+    "order": 2,
+    "score": [
+      265000,
+      950000,
+      2700000,
+      5100000,
+      7240000
+    ],
+    "name": "海边餐厅",
+    "score_id": 0,
+    "souvenir": [
+      0,
+      3
+    ],
+    "unlockCost": [
+      {
+        "id": 2,
+        "count": 660
+      }
+    ],
+    "enterCost": [
+      {
+        "id": 1,
+        "count": 15
+      }
+    ],
+    "dropReward": [
+      {
+        "id": 3001,
+        "count": 1,
+        "weight": 5000
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "previousId": 7,
+    "chapter": 2,
+    "order": 3,
+    "score": [
+      265000,
+      950000,
+      2700000,
+      5100000,
+      7240000
+    ],
+    "name": "奇妙潜水",
+    "score_id": 0,
+    "souvenir": [
+      0,
+      3
+    ],
+    "unlockCost": [
+      {
+        "id": 2,
+        "count": 660
+      }
+    ],
+    "enterCost": [
+      {
+        "id": 1,
+        "count": 15
+      }
+    ],
+    "dropReward": [
+      {
+        "id": 3001,
+        "count": 1,
+        "weight": 5000
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "previousId": 8,
+    "chapter": 2,
+    "order": 4,
+    "score": [
+      265000,
+      950000,
+      2700000,
+      5100000,
+      7240000
+    ],
+    "name": "露天烧烤",
+    "score_id": 0,
+    "souvenir": [
+      0,
+      3
+    ],
+    "unlockCost": [
+      {
+        "id": 2,
+        "count": 660
+      }
+    ],
+    "enterCost": [
+      {
+        "id": 1,
+        "count": 15
+      }
+    ],
+    "dropReward": [
+      {
+        "id": 3001,
+        "count": 1,
+        "weight": 5000
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "previousId": 9,
+    "chapter": 2,
+    "order": 5,
+    "score": [
+      265000,
+      950000,
+      2700000,
+      5100000,
+      7240000
+    ],
+    "name": "返程街道",
+    "score_id": 0,
+    "souvenir": [
+      0,
+      3
+    ],
+    "unlockCost": [
+      {
+        "id": 2,
+        "count": 1520
+      }
+    ],
+    "enterCost": [
+      {
+        "id": 1,
+        "count": 15
+      }
+    ],
+    "dropReward": [
+      {
+        "id": 3001,
+        "count": 1,
+        "weight": 5000
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "previousId": 10,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      265000,
+      950000,
+      2700000,
+      5590000,
+      8800000
+    ],
+    "name": "",
+    "score_id": 0,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 12,
+    "previousId": 11,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      265000,
+      950000,
+      2700000,
+      5590000,
+      8800000
+    ],
+    "name": "",
+    "score_id": 0,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 13,
+    "previousId": 12,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      265000,
+      950000,
+      2700000,
+      5590000,
+      8800000
+    ],
+    "name": "",
+    "score_id": 0,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 14,
+    "previousId": 13,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      265000,
+      950000,
+      2700000,
+      5590000,
+      8800000
+    ],
+    "name": "",
+    "score_id": 0,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 15,
+    "previousId": 14,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      265000,
+      950000,
+      2700000,
+      5590000,
+      8800000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 16,
+    "previousId": 15,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      270000,
+      1290000,
+      3480000,
+      6830000,
+      10630000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 17,
+    "previousId": 16,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      530000,
+      1550000,
+      4180000,
+      8010000,
+      12870000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 18,
+    "previousId": 17,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      530000,
+      1550000,
+      4180000,
+      8010000,
+      12870000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 19,
+    "previousId": 18,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      530000,
+      1550000,
+      4180000,
+      8010000,
+      12870000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 20,
+    "previousId": 19,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      530000,
+      1550000,
+      4180000,
+      8010000,
+      12870000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 21,
+    "previousId": 20,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      270000,
+      1630000,
+      4700000,
+      8550000,
+      13400000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 22,
+    "previousId": 21,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      527000,
+      1900000,
+      4960000,
+      9750000,
+      16250000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 23,
+    "previousId": 22,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      527000,
+      1900000,
+      4960000,
+      9750000,
+      16250000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 24,
+    "previousId": 23,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      790000,
+      2500000,
+      5570000,
+      11330000,
+      19970000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 25,
+    "previousId": 24,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      790000,
+      2500000,
+      5570000,
+      11330000,
+      19970000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 26,
+    "previousId": 25,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      270000,
+      1630000,
+      4700000,
+      10000000,
+      16450000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 27,
+    "previousId": 26,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      530000,
+      2240000,
+      5300000,
+      11050000,
+      18600000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 28,
+    "previousId": 27,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      530000,
+      2240000,
+      5300000,
+      11050000,
+      18600000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 29,
+    "previousId": 28,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      790000,
+      2500000,
+      5570000,
+      11330000,
+      19970000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 30,
+    "previousId": 29,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      790000,
+      2500000,
+      5570000,
+      11330000,
+      19970000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 31,
+    "previousId": 30,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      270000,
+      1290000,
+      3480000,
+      6360000,
+      11200000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 32,
+    "previousId": 31,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      530000,
+      1890000,
+      4100000,
+      7420000,
+      13950000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  },
+  {
+    "id": 33,
+    "previousId": 32,
+    "chapter": 0,
+    "order": 0,
+    "score": [
+      530000,
+      1890000,
+      4100000,
+      7420000,
+      13950000
+    ],
+    "name": "",
+    "score_id": 1,
+    "souvenir": [],
+    "unlockCost": [],
+    "enterCost": [],
+    "dropReward": []
+  }
+]
