@@ -40,6 +40,10 @@ if [ -d "../screw-puzzle-server-orleans" ]; then
         echo "\n【生成golang服务器使用的数据表】结束"
 fi
 }
-
 # 导出数据表
 genData
+mergeData
+
+echo 按任意键继续
+read -n 1
+echo 继续运行
