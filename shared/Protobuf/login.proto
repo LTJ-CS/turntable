@@ -1,0 +1,219 @@
+syntax = "proto3";
+package ClientProto;
+option go_package = "./protobuf;protobuf";
+import "common.proto";
+import "level.proto";
+
+// 登录相关，消息ID范围[10001 ~ 10200]
+
+
+// 统一登录请求 
+message LoginRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10001;
+  }
+
+  string code = 1;       // 登录码（必填）
+  Platform platform = 2; // 平台号（必填）
+  string channel = 3;    // 渠道标志（可选，渠道号）
+}
+
+// 统一登录回复
+message LoginResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10002;
+  }
+  string uid = 1;   // 玩家 uid
+  string token = 2;   // token
+  int64 time = 3;   // token 过期时间
+  int32 platform = 4;   // 平台号
+  string avatar = 5;   // 玩家头像
+  string nick_name = 6;   // 玩家昵称
+}
+
+
+
+
+// 统一逻辑请求
+message LogicMsgRequest {
+  bytes data = 1; // 消息二进制数据
+}
+
+// 统一逻辑返回
+message LogicMsgResponse {
+  EHttpErrorCode errorCode = 1;  // 错误码
+  string errorMsg = 2;   // 错误信息
+  bytes data = 3; // 消息二进制数据
+}
+
+
+// 客户端心跳请求
+message HeartBeatRequest
+{
+  enum N{
+    zero = 0;
+    OpCode = 10007;
+  }
+  int64  clientTime = 1;
+}
+// 客户端心跳请求
+message HeartBeatResponse
+{
+  enum N{
+    zero = 0;
+    OpCode = 10008;
+  }
+  int64  serverTime = 1; // 服务器时间 s
+}
+
+// 登录加载数据请求
+message LoginLoadDataRequest
+{
+  enum N{
+    zero = 0;
+    OpCode = 10003;
+  }
+  Platform platform = 1; // 登录平台 
+  string sceneId = 2; // 场景ID，打点需要
+  string clientVersion = 3; // 客户端版本,打点需要
+}
+// 登录加载数据请求
+message LoginLoadDataResponse
+{
+  enum N{
+    zero = 0;
+    OpCode = 10004;
+  }
+  int64 serverTime = 1; // 服务器时间 s
+  PlayerBaseInfo playerBaseInfo = 2; //玩家基础信息 
+  LevelsInfo levelsInfo = 3; //关卡相关数据 
+  repeated FunctionOpenInfo openFunctions = 4; //服务器控制开启的功能列表，活动类未开启也包含，因为服务器不能推送消息
+  repeated int32 guideList = 5; // 已完成引导列表
+}
+
+//玩家基础信息 
+message PlayerBaseInfo {
+  string id = 1; //玩家ID
+  string name = 2; // 名称
+  int32 level = 3; // 等级
+  int64 exp = 4; // 经验
+  string headImage = 5; //头像
+  bool isNewPlayer = 6; //是否为新玩家
+  int32 energy = 7; //体力
+  int32 energyLimit = 8; //体力上限
+  int64 energyRecoverTime = 9; //上次体力恢复时间 s
+  int64 gold = 10; //金币
+  bool isTestAccount = 11; //是否为测试账号
+}
+
+// GM请求
+message GmRequest
+{
+  enum N{
+    zero = 0;
+    OpCode = 10005;
+  }
+  string cmd = 1; //命令 (服务器通过命令反射调用方法) item 1 100
+  repeated string args = 2; //参数
+  string secret = 3; // 秘钥
+}
+// GM请求
+message GmResponse
+{
+  enum N{
+    zero = 0;
+    OpCode = 10006;
+  }
+  enum ErrorCode{
+    Success = 0; //成功
+    Fail = 1; //失败
+  }
+  ErrorCode errCode = 1; //错误码
+  string errMsg = 2;  // 错误信息
+}
+
+// GM列表请求
+message GmListRequest
+{
+  enum N{
+    zero = 0;
+    OpCode = 10011;
+  }
+}
+// GM请求
+message GmListResponse
+{
+  enum N{
+    zero = 0;
+    OpCode = 10012;
+  }
+  message GmInfo{
+    string cmd = 1; // 命令
+    string description = 2; // 描述
+    string usage = 3; // 使用方法
+    string sample = 4; // 示例
+  }
+  repeated GmInfo gmList = 1; // 命令列表
+}
+
+// 账号信息同步请求
+message AccountInfoSyncRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10009;
+  }
+  string name = 1; // 名称
+  string headImage = 2; // 头像
+  Platform platform = 3; //平台
+  string openId = 4; // 第三方平台ID
+}
+// 账号信息同步回复
+message AccountInfoSyncResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10010;
+  }
+  enum ErrorCode{
+    Success = 0; //成功
+    Fail = 1; //失败
+  }
+  ErrorCode errorCode = 1;
+}
+
+// 请求功能开启信息
+message FunctionOpenInfoRequest
+{
+  enum N{
+    zero = 0;
+    OpCode = 10013;
+  }
+}
+// 请求功能开启信息
+message FunctionOpenInfoResponse
+{
+  enum N{
+    zero = 0;
+    OpCode = 10014;
+  }
+  repeated FunctionOpenInfo openFunctions = 1; //服务器控制开启的功能列表，活动类未开启也包含，因为服务器不能推送消息
+}
+
+// 新手引导请求
+message NewGuideRequest
+{
+  enum N{
+    zero = 0;
+    OpCode = 10015;
+  }
+  int32 guideId = 1;
+}
+// 新手引导请求
+message NewGuideResponse
+{
+  enum N{
+    zero = 0;
+    OpCode = 10016;
+  }
+}

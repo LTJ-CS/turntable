@@ -1,0 +1,25 @@
+<module name="">
+    <bean name="vector2" valueType="1" sep=",">
+        <var name="x" type="float" />
+        <var name="y" type="float" />
+    </bean>
+    <bean name="vector3" valueType="1" sep=",">
+        <var name="x" type="float" />
+        <var name="y" type="float" />
+        <var name="z" type="float" />
+    </bean>
+    <bean name="vector4" valueType="1" sep=",">
+        <var name="x" type="float" />
+        <var name="y" type="float" />
+        <var name="z" type="float" />
+        <var name="w" type="float" />
+    </bean>
+    <bean name="music_part" group="c">
+        <var name="time" type="float"/>
+        <var name="desc" type="string"/>
+    </bean>
+    <bean name="music" group="c">
+        <var name="name" type="string"/>
+        <var name="part" type="list,music_part"/>
+    </bean>
+</module>

@@ -1,0 +1,207 @@
+syntax = "proto3";
+
+package protocol;
+
+option go_package = "./network;network";
+
+// 不要随便修改这里的值, 因为它们必须与逻辑代码的值匹配, 且会被存档, 随便修改会导致逻辑出错
+enum EActivityType{
+    InvalidActivity = 0;    // 无效的活动类型
+    TopicActivity = 1;      // 话题 pk 活动
+}
+
+enum EActivityStatus{
+    Default = 0; //默认值，活动不在生效时间内
+    Pre = 1; // 展示预览期
+    Effective = 2;  // 正式开启生效中
+    Settle = 3; // 结算期
+}
+
+// 阵营
+enum ECamp{
+    NoneCamp = 0;   // 无
+    LeftCamp = 1;   // 左边阵营
+    RightCamp = 2;  // 右边阵营
+}
+
+// 功能
+enum EFunctionType{
+    InvalidFunction = 0;
+    TopicActivityScoreOffset = 1;            // 话题功能开关
+    SwitchFrameRate = 2; // 开启高帧率
+    SkinImage = 3; // 皮肤图片生成
+    GirlGroup = 4; // 女团首页展示开关
+    GiveSkinGift = 5; // 赠送皮肤开关
+    GiveSkinRevocationGift = 6; // 撤回皮肤开关
+    SubdomainShared = 7; // 子域分享开关
+}
+
+// 消除模式可使用道具的 Id, Id 为负值是为了与 go 的校验算法统一, 所以真正使用时需要注意取反, 来自于 js, 必须与 js 保持一致
+enum ECrushModeItemType {
+    // 无效值
+    Invalid = 0;
+    // 移除道具
+    RemoveBlock = -1;
+    // 缩小道具
+    MinifyBlock = -2;
+    // 随机道具
+    RandomBlocks = -3;
+    // 复活道具
+    Relive = -4;
+    // 外星人道具
+    Alien = -5;
+}
+
+// 定义客户端帐号所在的平台
+enum EAccountPlatform {
+    PlatformInvalid = 0;  // 无效值
+    PlatformWx     = 1;   // 微信
+    PlatformQQ     = 2;   // QQ
+    PlatformTT     = 3;   // 抖音
+    PlatformVIVO   = 4;   // ViVo
+    PlatformOPPO   = 5;   // Oppo
+    PlatformKS     = 6;   // 快手
+    PlatformLt     = 7;   // 雷霆
+    PlatformTTFree = 8;   // 抖音_嘉宾版
+    PlatformHW     = 9;   // 华为
+    PlatformAli    = 10;  // 支付宝
+    PlatformXhs    = 11;  // 小红书
+    PlatformBeta   = 999; // 测试环境登录
+}
+
+// 设计者的类型
+enum EDesignerType
+{
+    None = 0;     // 无
+    Official = 1; // 官方设计者
+    Player = 2;   // 玩家设计者
+}
+
+message AwardInfo {
+    int32 awardId = 1;    //奖励ID
+    int32 awardType = 2;  //奖励类型
+    int32 awardCnt = 3;   //奖励数量
+    string reason =4;   // 奖励来源
+}
+
+// BlockData 砖块数据
+message BlockData {
+    int64 blockId = 1;   // 砖块ID
+    int64 createTime = 2; // 解锁时间戳
+}
+
+// 游戏标签模式的标签信息
+message GameTag {
+    string name = 1; // 标签名称
+    int64 count = 2; // 人数
+    string id = 3;   // id
+}
+
+// 游戏标签信息（带标签列表）
+message GameTagInfo {
+    repeated GameTag list = 1; // 列表
+    int32 ver = 2;             // 版本号（当前列表的）
+    int32 page_no = 3;         // 页码
+    int32 page_size = 4;       // 每页数量
+    int64 ex = 5;              // 客户端刷新时间戳（秒）
+}
+
+message Item{
+    string ItemUid    = 1;
+    int32 ItemId      = 2;
+    int32 ItemCount   = 3;
+    int64 CreateTime  = 4;
+    string Reason      = 5;
+    int32 ItemType = 6;
+}
+
+message UserBaseInfo{
+    string uid = 1; // 玩家ID
+    string nickname = 2;    // 名称
+    string avatar = 3;  // 头像
+    string adCode = 4;   // 地区ID
+}
+
+// 道具的索引
+enum EProp {
+    prop_dont_use_this = 0;
+    prop_remove = -1; // 移除道具
+    prop_cancel = -2; // 撤回道具
+    prop_random = -3; // 随机道具
+    prop_reborn = -4; // 复活
+}
+
+// 比赛中存储每步的操作信息的结构
+message MatchStepInfo {
+    int32 chess_index = 1; // 保存移动的棋子的或道具的索引(一场比赛中必须唯一), 棋子索引为 >=0 的数, 道具的索引为负数
+    int32 time_tag = 2;    // 此操作的时间(毫秒), 相对于比赛开始的时间
+    int32 delta_time = 3;  // 玩家两个步骤中间的操作间隔时间（毫秒）
+}
+
+// 一场比赛的玩家操作信息, 用于数据的校验
+message MatchPlayInfo {
+    int32 game_type = 1;                       // 关卡类型
+    repeated int32 map_seed = 3;               // 关卡的种子
+    repeated MatchStepInfo step_info_list = 4; // 每步玩家操作的信息
+}
+
+
+message MailAwardItem {
+    int32 ItemId = 1;
+    int32 ItemType = 2;
+    int32 ItemCount = 3;
+    bool ItemState = 4;
+    int32 index =5; // 附件数组的下标
+}
+
+// MailData 邮件数据
+message MailData {
+    string mailId = 1;          //邮件ID
+    int32 mailType = 2;         //邮件类型
+    string title = 3;           //邮件标题
+    string content = 4;         //邮件内容
+    string fromId = 5;          //发件人
+    repeated MailAwardItem attachments = 6;     //附件
+    bool extracted = 7;         //附件是否已提取
+    bool haveRead = 8;          //邮件是否已读
+    bool skinState = 9;         //皮肤是否已领取
+    int64 expireTime = 10;      //有效期
+    int64 sendTime = 11;        //发送时间
+}
+
+// 玩家信息
+message UserInfo
+{
+    string uid = 1;
+    bool isNew = 2;
+    int32 type = 3;
+}
+
+// 每日会自动清除的数据
+message StageData
+{
+    int32 stageId = 1; // 关卡 id
+    int32 stageStar = 2; // 关卡星级
+    int32 dailyPassedCount = 3; // 全服玩家每日通过次数
+    string designerId = 4; // 设计者 id
+    EDesignerType designerType = 5; // 设计者类型
+    bool isPassed = 6; // 是否通过了
+    string stageMd5 = 7; // 关卡的 md5
+    int32 dailyChallengeCount = 8; // 今日挑战次数
+    string mapId = 9; // 地图 id
+}
+
+// 角色信息
+message CharacterData
+{
+    string nickname = 1;  // 昵称
+    bool isPassedGuideLevel = 2; // 是否通过了新手引导
+    bool isPassedNewPlayerLevel = 3; // 是否通过新人关
+    bool isAuthorized = 4; // 是否授权过
+    repeated StageData dailyStages = 5; // 存储今日关卡信息（这里为了前端显示和预加载关卡）
+    string avatar = 6; // 头像
+    string adCode = 7; // 地区code
+    int32 canGiveSkinCount = 8; // 可赠送皮肤礼物次数
+    int32 canReceiveSkinCount = 9; // 可领取皮肤礼物次数
+    int32 nextMondayTimestamp = 10; // 下周一时间戳
+}

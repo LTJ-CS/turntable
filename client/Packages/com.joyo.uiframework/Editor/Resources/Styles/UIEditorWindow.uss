@@ -1,0 +1,47 @@
+@import url("UICommon.uss");
+.tab {
+    flex-grow: 0;
+    height: 30px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    -unity-text-align: middle-left;
+    -unity-text-outline-width: 0;
+    white-space: nowrap;
+    -unity-paragraph-spacing: 0;
+    width: 100%;
+}
+
+.currentlySelectedTab {
+    background-color: rgb(59, 96, 148);
+    -unity-background-scale-mode: stretch-to-fill;
+    align-items: stretch;
+    flex-direction: row;
+    flex-grow: 0;
+    color: rgb(255, 255, 255);
+}
+
+#tableContent {
+}
+
+.unselectedContent {
+    display: none;
+}
+
+#tabSpace {
+    flex-shrink: 0;
+    width: 90%;
+    height: 0;
+    border-top-color: rgb(49, 49, 49);
+    border-bottom-color: rgb(78, 78, 78);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.readonly-textfield {
+    -unity-text-input-control-readonly: true;
+}

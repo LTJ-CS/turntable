@@ -1,0 +1,106 @@
+syntax = "proto3";
+package account_proto;
+option go_package = "./network;network";
+
+
+// 统一登录请求
+message Login {
+    enum N{
+        zero = 0;
+        OpCode = 1001;
+    }
+    enum Platform {
+        UNKNOWN = 0;    // 未知（非法）
+        WX = 1;         // 微信
+        QQ = 2;         // QQ
+        TT = 3;         // 抖音
+        VIVO = 4;       // ViVo
+        OPPO = 5;       // Oppo
+        KS = 6;         // 快手
+        JOYO = 7;       // 简游登录
+        HW   = 8;       // 华为
+        Zfb  = 9;       // 支付宝
+        Xhs  = 10;      // 小红书
+        BETA = 999;    // 测试环境登录（仅测试环境可用）
+    }
+    string code = 1;       // 登录码（必填）
+    Platform platform = 2; // 平台号（必填）
+    string channel = 3;    // 渠道标志（可选，渠道号）
+}
+
+// 统一登录回复
+message LoginAck {
+    string uid       = 1;   // 玩家 uid
+    string token     = 2;   // token
+    int64 time       = 3;   // token 过期时间
+    int32 platform   = 4;   // 平台号
+    string avatar    = 5;   // 玩家头像
+    string nick_name = 6;   // 玩家昵称
+}
+
+// 定义 Http 的 ErrorCode
+enum EHttpErrorCode {
+    Nil                 =    0;     // 无
+    Success             =    1;     // 成功
+    ParamsInvalid       =    10001; // 参数错误
+    SystemErr           =    10002; // 系统错误
+    Unauthorized        =    10003; // 没有权限
+    DatabaseErr         =    10004; // 数据库错误
+    UserNotLogin        =    10005; // 没有登录
+    UserSignErr         =    10006; // 用户token过期，需要重新登录获取token
+    UserNotExistErr     =    10007; // 用户不存在
+    UserAlreadyExistErr =    10008; // 用户已存在
+    JsonUnmarshalErr    =    10009; // JSON 解析失败
+    DecryptErr          =    10010; // 解密失败
+    SocketNotExistErr   =    10011; // 长链接不存在
+    AdVideoOutOfMaxTimesErr = 10012; // 超出最大看视频次数
+    SystemUnlockErr      =   10013; // 系统没解锁
+    ConfigErr            =   10014; // 配置错误
+    ContentSecErr        =   10015; // 输入内容不合法
+    ServerNotServeErr    =   10016; // 服务器不在服务中
+    NoData               =   10017; // 没有此数据
+    LoginVersionErr      =   10018; // 登录版本过低
+    NoMatchPlayInfo      =   10019; // 没有玩家的比赛数据
+    JWTTokenErr          =   10020; // token 错误
+    JWTTokenOutOfDateErr =   10021; // token 过期
+    JWTTokenUIDDecodeErr =   10022; // token 中的 uid 解码失败
+    JWTTokenModifiedErr  =   10023; // token 被篡改
+    TooManyReqErr        =   10024; // 访问太频繁
+    SameAsCacheErr       =   10025; // 请求数据与缓存一致 304
+    InternalErr          =   10026; // 内部服务错误
+    PlatformNotRightErr  =   10027; // 客户端平台不正确
+    AccountErr           =   10028; // 账号异常，可能被封禁
+    ClientVersionLowErr  =   10029; // 客户端版本低需要升级到最新版本
+    WxSessionKeyInvalid  =   10030; // 微信 session key 无效
+    WxSessionKeyNotFind  =   10031; // 找不到客户端上传的key, 无法解密数据包
+    RespDataErr          =   10032; // 服务器返回的数据不正确
+    PlatformNotExistErr  =   10033; // 平台号不正确
+}
+
+
+// 统一逻辑请求
+message LogicMsg {
+    bytes data = 1; // 消息二进制数据
+}
+
+// 统一逻辑返回
+message LogicMsg_Ack {
+    EHttpErrorCode errorCode = 1;  // 错误码
+    string errorMsg = 2;   // 错误信息
+    bytes data = 3; // 消息二进制数据
+}
+
+// 关卡上传
+message StageMapUpload {
+    string mapId = 1; // 关卡 id
+    bytes mapData = 2; // 关卡数据
+    string title = 3; // 命名
+    bool force = 4; // 是否强制
+}
+
+// 关卡上传回复
+message StageMapUpload_Ack {
+    EHttpErrorCode errorCode = 1;
+    string errorMsg = 2;
+    string mapId = 3;
+}

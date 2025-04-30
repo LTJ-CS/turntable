@@ -1,0 +1,8 @@
+<linker>
+  <assembly fullname="Assembly-CSharp">
+    <namespace fullname="Client2Server" preserve="all" />
+    <namespace fullname="Server2Client" preserve="all" />
+    <namespace fullname="Protocol" preserve="all" />
+    <namespace fullname="AccountProto" preserve="all" />
+  </assembly>
+</linker>

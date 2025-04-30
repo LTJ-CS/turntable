@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/GameScript/Editor/Gm/GmEditor.uss?fileID=7433441132597879392&amp;guid=a689ad5dc6e554698a72b1e2797d3301&amp;type=3#GmEditor" />
+    <ui:VisualElement name="ExecuteElement" style="height: 35px; margin-top: 10px; flex-grow: 1;">
+        <ui:TextField picking-mode="Ignore" label="GM" value="item 1 100" text="item 1 100" name="GmInput" tooltip="请输入GM" style="width: 442px; height: 28px; font-size: 16px; -unity-text-align: middle-left; opacity: 1; flex-basis: auto; justify-content: flex-end;" />
+        <ui:Button text="执行" display-tooltip-when-elided="true" name="SubmitButton" style="width: 86px; height: 29px; position: absolute; top: -2px; left: 456px; font-size: 16px;" />
+        <ui:Label display-tooltip-when-elided="true" name="gmExecuteResultLabel" style="height: 76px; width: 940px;" />
+        <ui:TextField picking-mode="Ignore" name="GmListView" style="height: 658px; align-items: flex-start;" />
+    </ui:VisualElement>
+</ui:UXML>

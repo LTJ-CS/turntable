@@ -1,0 +1,173 @@
+syntax = "proto3";
+package ClientProto;
+option go_package = "./protobuf;protobuf";
+import "common.proto";
+
+
+// 剪影模式，消息ID范围[10801 ~ 10900]  
+
+
+
+// 剪影数据
+message CucolorisInfo {
+  repeated CucolorisLevelInfo levels = 1; // 剪影关卡信息
+  int32 tipsItemCount = 2; //提示道具数量（只能延续到关卡的下一个step）
+}
+
+// 剪影关卡信息
+message CucolorisLevelInfo {
+  int32 id = 1; // 剪影关卡ID
+  int32 sceneLevelId = 2; // 场景关卡ID
+  int32 stepId = 3; // 当前关卡待进行的步骤ID
+  LevelState state = 4; // 关卡状态
+  repeated ItemInfo rewards = 5; // 已经获得的道具
+
+  enum LevelState{
+    Lock = 0; // 未解锁
+    Unlock = 1; // 已解锁
+    Finish = 2; // 已完成
+  }
+}
+
+
+// 剪影信息请求
+message CucolorisInfoRequest{
+  enum N{
+    zero = 0;
+    OpCode = 10801;
+  }
+}
+// 剪影信息请求
+message CucolorisInfoResponse{
+  enum N{
+    zero = 0;
+    OpCode = 10802;
+  }
+  enum ErrorCode{
+    Success = 0;
+    NotOpen = 1;
+  }
+  ErrorCode errorCode = 1;
+  CucolorisInfo info = 2;
+}
+
+
+// 解锁剪影关卡
+message CucolorisLevelUnlockRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10803;
+  }
+  int32 id = 1; //剪影关卡ID
+}
+// 解锁剪影关卡
+message CucolorisLevelUnlockResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10804;
+  }
+  enum ErrorCode{
+    Success = 0;
+    LevelIdError = 1;
+    ItemNotEnough = 2;
+    AlreadyUnlock = 3;
+    FrontLeveNotFinish = 4;
+    NotOpen = 5;
+  }
+  ErrorCode errorCode = 1;
+  repeated ItemInfo finalItems = 2; // 消耗后剩余的道具，用于客户端同步数据
+  CucolorisLevelInfo levelInfo = 3; // 关卡信息
+}
+
+// 剪影关卡step 点击开始
+message CucolorisLevelStepStartRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10805;
+  }
+}
+// 剪影关卡step 点击开始
+message CucolorisLevelStepStartResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10806;
+  }
+  enum ErrorCode{
+    Success = 0;
+    LevelNoUnlock = 1;
+  }
+  ErrorCode errorCode = 1;
+}
+
+// 剪影关卡 使用提示
+message CucolorisLevelUseTipsRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10807;
+  }
+  bool useTipsItem = 1; // true 使用提示道具，false使用金币
+}
+// 剪影关卡 使用提示
+message CucolorisLevelUseTipsResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10808;
+  }
+  enum ErrorCode{
+    Success = 0;
+    ItemNotEnough = 1;
+    LevelNoUnlock = 2;
+  }
+  ErrorCode errorCode = 1;
+  repeated ItemInfo finalItems = 2; // 消耗后剩余的道具，用于客户端同步数据
+}
+
+// 剪影关卡 复活
+message CucolorisLevelReviveRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10809;
+  }
+}
+// 剪影关卡 复活
+message CucolorisLevelReviveResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10810;
+  }
+  enum ErrorCode{
+    Success = 0;
+    ItemNotEnough = 1;
+    LevelNoUnlock = 2;
+    AlreadyRevive = 3;
+  }
+  ErrorCode errorCode = 1;
+}
+
+
+// 剪影关卡 Step结束
+message CucolorisLevelStepFinishRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10811;
+  }
+  bool success = 1; // true 成功，false 失败
+}
+// 剪影关卡 Step结束
+message CucolorisLevelStepFinishResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10812;
+  }
+  enum ErrorCode{
+    Success = 0;
+    LevelNotFind = 1;
+    Timeout = 2;
+  }
+  ErrorCode errorCode = 1;
+  repeated ItemInfo finalItems = 2; // 最终道具，用于客户端同步数据((最后一步))
+  repeated ItemInfo finalRewards = 3; // 奖励道具(关卡最后一步)
+  repeated ItemInfo stepRewards = 4; // step 奖励，可能有下一关的提示道具
+  CucolorisLevelInfo levelInfo = 5; // 关卡信息
+}
+

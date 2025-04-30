@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Level
+  - Water
+  - UI
+  - Screw
+  - Block1
+  - Block2
+  - Block3
+  - Block4
+  - Block5
+  - Block6
+  - Block7
+  - Block8
+  - Block9
+  - Block10
+  - Block11
+  - Block12
+  - Block13
+  - Block14
+  - None
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - YIUI3DLayer
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: LevelCrushedScrew
+    uniqueID: 1267277165
+    locked: 0
+  - name: UI
+    uniqueID: 2733576001
+    locked: 0

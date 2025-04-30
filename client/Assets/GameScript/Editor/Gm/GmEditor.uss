@@ -1,0 +1,8 @@
+Label {
+    font-size: 16px;
+    -unity-font-style: bold;
+    color: rgb(225, 228, 231);
+    width: 40px;
+    max-width: 120px;
+    min-width: 40px;
+}

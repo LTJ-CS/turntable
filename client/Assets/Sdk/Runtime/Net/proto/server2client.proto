@@ -1,0 +1,670 @@
+syntax = "proto3";
+package Server2Client;
+import "game_tag.proto";
+option go_package = "./network;network";
+
+// SiloLogicServer 简称 LS, Client 表示客户端简称 C, SiloChatServer 简称CS, SiloPlanetServer简称 PS, sheepGameServer, 简称SS, RoomServer 简称 RS
+// 客户端到服务器消息 OpCode 范围为[30000 ~ 35000]
+// 服务器到客户端的消息 OpCode 范围为[35000 ~ 40000]
+// =================================================================
+
+// 服务器心跳返回
+message HeartBeatAckInfo
+{
+  enum N{
+    zero = 0;
+    OpCode= 1002;
+  }
+  int64	serverTime = 1;
+}
+
+// 活动状态数据
+message ActivityStatusInfo {
+  protocol.EActivityType activityType = 1; //活动类型
+  int32 activityId = 2; //活动id
+  protocol.EActivityStatus status = 3; //活动状态
+  int64 startTime = 4; //此阶段开始时间
+  int64 endTime = 5; //此阶段结束时间
+  int32 gmLevelCondition = 6; // 活动的可见条件(用户级别)
+  bool isOpen = 7; // 是否开启
+  repeated int32 flags = 8; // 玩家flag
+}
+
+message GetUserActivityDataAck {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    ParamsErr = 2;  // 参数无效
+  }
+  AckCode code =1;//执行结果错误码
+  repeated UserActivityInfo activityData = 2;
+}
+
+// 活动的配置信息
+message ActivityConfig{
+  int32  activityId = 1;  //活动Id
+  protocol.EActivityType activityType =2; // 活动类型
+  int32 endTime = 3;// 活动结束时间
+  repeated ActivityProgress activityConf =4; // 活动的配置信息
+}
+
+message ActivityProgress{
+  int32 conditionType = 1; // 达成条件类型
+  int32 conditionValue = 2; // 达成条件值
+  repeated protocol.AwardInfo awardList =3; //奖励信息
+}
+
+// 活动数据
+message UserActivityInfo {
+  int32 activityIndex = 1;  //活动期数，第 N 期活动
+  int32 progress = 2;  //活动的完成进度
+  int32 awardProgress = 3;  //活动的奖励进度
+  int32 refreshMark = 4;  //活动刷新标记
+  int32 indexEndTime = 5;  //本期活动结束时间戳
+  ActivityConfig activityConfig = 6; // 活动的配置信息
+  int64 realStartTime = 7; //活动真正开启时间（用于活动预告）
+}
+
+
+// 返回已解锁砖块列表
+message UserUnlockBlockListAck {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    ParamsErr = 2;  // 参数无效
+    NoDate = 3;  // 数据为空
+    Orleans_Fail = 4;  //请求orleans异常
+  }
+  AckCode code =1;//执行结果错误码
+  repeated protocol.BlockData blockList = 2;
+}
+
+// 返回砖块装备位信息
+message UserBlockSlotsAck {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    ParamsErr = 2;  // 参数无效
+    NoDate = 3;  // 数据为空
+    Orleans_Fail = 4;  //请求orleans异常
+  }
+  AckCode code =1;                //执行结果错误码
+  repeated int64 blockIdList = 2; //砖块装备位信息
+  int32 topicId = 3;   // 装备的主题ID
+}
+
+// 返回装备砖块消息
+message ReqEquipBlockSlotAck {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    ParamsErr = 2;  // 参数无效
+    Repeated = 3;  // 砖块已经装备
+    Locked = 4;    // 砖块未解锁
+    NoDate = 5;    // 砖块槽位数据为空
+    Orleans_Fail = 6;  //请求orleans异常
+  }
+  AckCode code =1;//执行结果错误码
+}
+
+// 返回重置砖块消息
+message ResetBlockSlotAck {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    ParamsErr = 2;  // 参数无效
+    NoDate = 3;  // 数据为空
+    Orleans_Fail = 4;  //请求orleans异常
+  }
+  AckCode code =1;     //执行结果错误码
+  repeated int64 blockIdList = 2;
+  int32 topicId = 3;   // 装备的主题ID
+}
+
+// 返回已解锁砖块列表
+message UnlockBlockListNewAck {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    ParamsErr = 2;  // 参数无效
+    NoDate = 3;  // 数据为空
+    Orleans_Fail = 4;  //请求orleans异常
+  }
+  AckCode code =1;//执行结果错误码
+  repeated protocol.BlockData blockList = 2;
+}
+
+// 装备指定主题的砖块
+message EquipTopicBlockSlotsAck {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    ParamsErr = 2;  // 参数无效
+    NoDate = 3;     // 数据为空
+    Locked = 4;     // 砖块未解锁
+    Orleans_Fail = 5;  //请求orleans异常
+  }
+  AckCode code =1;//执行结果错误码
+  repeated int64 blockIdList = 2;
+  int32 topicId = 3;   // 装备的主题ID
+}
+
+message  SendAwardAck{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    NoDate = 2;  // 数据为空
+  }
+  AckCode code =1;//执行结果错误码
+  repeated protocol.Item itemList =2; //新生成的item
+}
+
+
+// MailStateData 邮件状态数据
+message MailStateData {
+  string mailId = 1;  //邮件ID
+  bool haveRead = 2;  //邮件读取状态
+}
+
+// 返回邮件列表
+message GetMailStateListAck {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    Orleans_Fail = 2;  //请求orleans异常
+  }
+  AckCode code =1;                       //执行结果错误码
+  repeated MailStateData mailState = 2;  //邮件读取状态
+}
+
+// 获取活动状态 返回
+message LS2C_GetActivityStatusAck {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode code =1;//执行结果错误码
+  repeated ActivityStatusInfo activityStatusInfo = 2;
+  int32 gmLevel = 3; // 玩家gmLevel
+}
+
+// 服务器对 C2LS_DailyMatch_UseItem 的返回
+message LS2C_DailyMatch_UseItem{
+  enum AckCode {
+    Fail = 0;// 失败
+    Success = 1;       // 成功
+    InvalidToken = 3;  // 无效的 token, 需要退出游戏
+  }
+  AckCode ackCode = 1;    // 结果
+}
+
+// 设置玩家自己的 AdCode 返回
+message LS2C_SetAdCodeAck{
+  enum AckCode{
+    Fail = 0;    // 失败
+    Success = 1; // 成功
+  }
+  AckCode code = 1;
+  string adCode = 2;  // 返回当前的 adCode
+}
+
+// 设置玩家的自己的 AdCode 的返回
+message LS2C_GetAdCode{
+  enum AckCode{
+    Fail = 0;    // 失败
+    Success = 1; // 成功
+  }
+  AckCode code = 1;
+  string adCode = 2;  // 返回当前的 adCode
+}
+
+// 请求玩家基础信息返回
+message LS2C_UserBaseInfo_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;  // 返回状态码
+  protocol.UserInfo userInfo = 2;       // 用户信息
+  repeated protocol.CharacterData characterData = 3;     // 角色信息
+  repeated protocol.EFunctionType functions = 4; // 开启的功能列表
+}
+
+message ModeItemSharedCount{
+  protocol.ECrushModeItemType itemType = 1; // 道具类型
+  int32 leftShareCounts = 2;  // 剩余分享次数
+}
+
+// 请求开局小游戏
+message LS2C_Start_Game_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    LessCoin = 2;       // 缺少星球币
+    GameTypeNotOpen = 3;// 玩法未开启
+    Updating = 4;       // 维护中
+    NeedSettle = 5;     // 需要结算
+    WaitSettle = 6;     // 等待结算
+    InvalidStage = 7;   // 无效的关卡
+  }
+
+  AckCode ackCode = 1;    // 结果
+  string gameToken = 2;   // 开局比赛token
+  repeated ModeItemSharedCount itemSharedInfo = 3; // 剩余分享次数
+  int32 dailyChallengeCount = 4; // 本人每日挑战次数
+  int32 matchSeed = 5; // 当前关卡的种子
+  string stageMd5 = 6; // 关卡的 md5（这里是最准确的md5，UserBaseInfo中的md5信息为了前端预加载）
+}
+
+// 告诉服务器游戏结束 请求结算
+message LS2C_End_Game_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    InvalidToken = 2;  // 无效的 token, 需要重新拉取关卡信息
+  }
+  AckCode ackCode = 1;         // 返回状态码
+  int32 dailyPassedCount = 2;    // 本人当日通关次数
+  int32 totalPassedCount = 3;    // 本人总游戏次数
+  int32 dailyChallengeCount = 4; // 本人每日挑战次数
+  repeated protocol.StageData stageData = 5; // 当前关卡数据
+  repeated int32 rewards = 6;  // 奖励物品
+}
+
+// 设置玩家引导状态 返回
+message LS2C_SetGuide_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;  // 返回状态码
+  int32 currGuide = 2;  // 当前引导枚举 常量表中的cfg.EGuideType
+}
+
+// 分享 返回
+message LS2C_Share_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    InvalidToken = 2;  // 无效的 token, 可能是昨天的
+  }
+  AckCode ackCode = 1;  // 返回状态码
+  repeated ModeItemSharedCount itemSharedInfo = 2; // 剩余分享次数
+}
+
+// 设置通过引导关卡 返回
+message LS2C_SetGuideFinish_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;         // 返回状态码
+}
+
+// 设置通过新人关卡 返回
+message LS2C_SetNewbieFinish_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;         // 返回状态码
+  repeated int32 rewards = 2;  // 奖励物品
+}
+
+// 开始新人关卡 返回
+message LS2C_StartNewbie_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;         // 返回状态码
+  repeated ModeItemSharedCount itemSharedInfo = 2; // 剩余分享次数
+  int32 matchSeed = 3; // 当前关卡的种子
+}
+
+// 设置是否授权 返回
+message LS2C_SetAuthorize_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;  // 返回状态码
+  bool isAuthorized = 2; // 是否授权
+}
+
+// 皮肤信息
+message SkinInfo{
+  int32 skinId = 1;  // 皮肤ID
+  int64 createTime = 2; // 获得时间
+  bool isNew = 3;  // 是否新获得皮肤
+  string reason = 4; // 获得原因
+  string uid = 5; // 唯一 id
+}
+
+message SkinCollection{
+  repeated SkinInfo skins = 1;
+}
+
+// 获取装扮收藏信息 返回
+message LS2C_GetDressUpInfo_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;  // 返回状态码
+  map<int32, int32> usingSkin = 2; // 当前使用的皮肤ID
+  map<int32, SkinCollection> skinCollection = 3;  // (1:xxx 2:xxx )收藏的皮肤列表
+}
+
+// 查看皮肤 返回
+message LS2C_ViewSkins_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;  // 返回状态码
+}
+
+// 使用皮肤 返回
+message LS2C_SkinDressUp_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    WrongPos = 2;  // 位置错误
+  }
+  AckCode ackCode = 1;  // 返回状态码
+}
+
+
+// 上传同步玩家账号信息
+message LS2C_SyncAccountInfo_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;  // 返回状态码
+}
+
+// 获取玩家名片
+message PlayerCard{
+  protocol.UserBaseInfo userBaseInfo = 1; // 玩家基本信息
+  int32 dailyPassedCount = 2;       // 本人当日通关次数
+  map<int32, int32> usingSkin = 3;  // 当前使用的皮肤ID
+}
+
+// 阵营信息
+message CampInfo{
+  protocol.ECamp camp = 1; // 阵营
+  int32 score = 2; // 当前分数
+  repeated PlayerCard players = 3; // 阵营玩家信息
+}
+
+// 话题 pk 活动奖励信息
+message TopicBattlePath{
+  int32 id = 1; // 奖励ID
+  int32 passedCount = 2; // 通关次数
+  int32 rewardId = 3; // 奖励的道具ID
+  bool isClaimed = 4; // 是否已领取
+}
+
+// 获取话题 pk 活动数据
+message LS2C_GetTopicActivity_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;  // 返回状态码
+  PlayerCard ownerCard = 2; // 玩家本人名片
+  protocol.ECamp ownerCamp = 3; // 玩家阵营
+  int32 passedCount = 4; // 活动中已通关次数
+  repeated CampInfo campsInfo = 5; // 双方阵营信息
+  repeated TopicBattlePath topicBattlePath = 6; // 话题 pk 活动奖励信息
+}
+
+// 选取阵营
+message LS2C_SelectCamp_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;
+}
+
+// 领取话题 pk 活动奖励
+message LS2C_ClaimTopicActivityReward_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    RepeatClaim = 2; // 重复领取
+  }
+  AckCode ackCode = 1;
+  int32 rewardId = 2;
+}
+
+// 设置玩家 Flag
+message LS2C_SetActivityFlag_Ack {
+  enum AckCode{
+    Success = 0; // 成功
+    Fail = 1;  // 失败
+  }
+  AckCode code =1;//执行结果错误码
+}
+
+// 话题活动获取结算信息 返回
+message LS2C_GetTopicActivitySettle_Ack{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode code =1;//执行结果错误码
+  int32 activityId = 2; // 活动ID
+  protocol.ECamp ownerCamp = 3; // 玩家阵营
+  repeated CampInfo campsInfo = 4; // 双方阵营信息
+}
+
+// 分享加入女团 返回
+message LS2C_ShareJoinGroup_Ack{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;//执行结果错误码
+}
+
+// 获取女团列表 返回
+message LS2C_GetGroupMembers_Ack{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1; //执行结果错误码
+  repeated PlayerCard players = 2; // 成员列表
+}
+
+// 移除女团成员 返回
+message LS2C_RemoveGroupMember_Ack{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1; //执行结果错误码
+}
+
+// 皮肤赠送 返回
+message LS2C_GiveSkin_Ack{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    NotExist = 2; // 皮肤不存在
+    NoGiveCount = 3; // 没有赠送次数
+  }
+  AckCode ackCode = 1; // 执行结果错误码
+  string shareCode = 2; // 赠送码, 用于分享链接
+}
+
+// 皮肤收取 返回
+message LS2C_GetGiftSkin_Ack{
+  enum AckCode{
+    Fail = 0;       // 失败
+    Success = 1;    // 成功
+    BeenUsed = 2;   // 链接已经被使用 (弹出tips：该装扮已被其他玩家领取！)
+    Expired = 3; // 已过期 (弹出tips：链接已失效，无法领取！)
+    Self = 4; // 自己不可以领取
+    AlreadyHave = 5; // 已经拥有
+    NoReceiveCount = 6; // 没有领取次数
+  }
+  AckCode ackCode = 1; // 执行结果错误码
+  protocol.Item item = 2; // 收取的皮肤
+  PlayerCard playerCard = 3; // 赠送者名片
+}
+
+// 收取赠送的皮肤 返回
+message LS2C_CollectGiftSkin_Ack{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    Expired = 2;    // 已过期 (弹出tips：链接已失效，无法领取！)
+    AlreadyHave = 3; // 已经拥有
+    NoReceiveCount = 4; // 没有领取次数
+  }
+  AckCode ackCode = 1;
+}
+
+enum ENoticeType{
+  None = 0;
+  SkinGiftSuccess = 1; // 赠送皮肤成功 （misc：[皮肤唯一id，皮肤 id，reason]）
+  SkinGiftFail_NoReceiveCount = 2; // 没有领取次数（misc：[皮肤唯一id，皮肤 id，reason]）
+  SkinGiftFail_AlreadyHave = 3; // 已经拥有皮肤（misc：[皮肤唯一id，皮肤 id，reason]）
+  SkinGiftFail_Refuse = 4; // 拒绝接受皮肤（misc：[皮肤唯一id，皮肤 id，reason]）
+  SkinGiftFail_Expired = 5; // 已过期（misc：[皮肤唯一id，皮肤 id，reason]）
+}
+
+message Notice{
+  string noticeId = 1;  // 通知 id
+  ENoticeType type = 2; // 通知类型
+  PlayerCard sender = 3; // 发送者名片
+  repeated string misc = 4; // 附加信息
+}
+
+// 获取通知列表 返回
+message LS2C_GetNoticeList_Ack{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;
+  int32 canGiveSkinCount = 2; // 可赠送皮肤礼物次数
+  int32 canReceiveSkinCount = 3; // 可领取皮肤礼物次数
+  repeated Notice noticeList = 4; // 通知列表
+}
+
+// 已播放通知 返回
+message LS2C_ReadNotice_Ack{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;
+}
+
+// 获取赠送中的皮肤列表 返回
+message LS2C_GetGivingSkinGifts_Ack{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;
+  repeated protocol.Item givingSkinList = 2;
+}
+
+// 撤回赠送 返回
+message LS2C_RevokeGivingSkinGift_Ack{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    HasSend = 2;   // 礼物已送出
+  }
+  AckCode ackCode = 1;
+  int32 canGiveSkinCount = 2; // 可赠送皮肤礼物次数
+  int32 canReceiveSkinCount = 3; // 可领取皮肤礼物次数
+  int32 nextMondayTimestamp = 4; // 下周一时间戳
+}
+
+// 获得指定公众号免费皮肤 返回
+message LS2C_GetOfficialFreeSkin_Ack{
+  enum AckCode {
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    RepeatClaim = 2; // 重复领取
+  }
+  AckCode ackCode = 1;
+  SkinInfo rewardSkin = 2; // 获得的奖励
+}
+
+// 新皮肤赠送 返回
+message LS2C_GiveSkin_V2_Ack{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    NotExist = 2; // 皮肤不存在
+    NoGiveCount = 3; // 没有赠送次数
+  }
+  AckCode ackCode = 1; // 执行结果错误码
+  string shareCode = 2; // 赠送码, 用于分享链接
+}
+
+// 皮肤赠送确认 返回
+message LS2C_GiveSkinConfirm_Ack{
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    NotExist = 2;   // 皮肤不存在
+    NoGiveCount = 4; // 没有赠送次数
+  }
+  AckCode ackCode = 1;
+}
+
+////////////////////////// 邮件相关消息 start //////////////////////////
+// 返回邮件列表
+message LS2C_MailGetList_Ack {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    Orleans_Fail = 2;  //请求orleans异常
+  }
+  AckCode ackCode =1;    //执行结果错误码
+  repeated protocol.MailData mailList = 2;  //邮件列表
+}
+
+// 返回领取邮件奖励
+message LS2C_MailClaimAttachment_Ack {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+    PartialSuccess = 2; // 部分成功
+  }
+  AckCode ackCode =1;    //执行结果错误码
+  string mailId = 2;  //邮件ID
+  repeated  protocol.Item Item =3; // 实际提取的物品列表
+}
+
+// 返回标记邮件已读
+message LS2C_MailMarkRead_Ack {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode =1;    //执行结果错误码
+  string mailId =2;  // 邮件ID
+}
+
+// 返回标记邮件已读
+message LS2C_MailDelete_Ack {
+  enum AckCode{
+    Fail = 0;      // 失败
+    Success = 1;   // 成功
+  }
+  AckCode ackCode = 1;    //执行结果错误码
+  string mailId = 2;  // 邮件ID
+}
+////////////////////////// 邮件相关消息 end //////////////////////////

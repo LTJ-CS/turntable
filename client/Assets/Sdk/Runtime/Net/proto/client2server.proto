@@ -1,0 +1,463 @@
+syntax = "proto3";
+package Client2Server;
+import "game_tag.proto";
+option go_package = "./network;network";
+
+// Client 表示客户端简称 C
+// sheepGameServer, 简称SS
+// SiloLogicServer 简称 LS
+// SiloGameServer 简称 GS
+// SiloPlanetServer简称 PS
+// SiloChatServer 简称CS
+// SiloRoomServer 简称 RS
+// 客户端到服务器消息 OpCode 范围为[30000 ~ 35000]
+// 服务器到客户端的消息 OpCode 范围为[35000 ~ 40000]
+// =================================================================
+
+// 客户端心跳请求
+message HeartBeatReqInfo
+{
+  enum N{
+    zero = 0;
+    OpCode= 1001;
+  }
+  int64	clientTime = 1;
+}
+
+// 请求活动配置数据
+message GetUserActivityData {
+  enum N{
+    zero = 0;
+    OpCode = 20031;
+  }
+  protocol.EActivityType activityType = 1; // 活动类型
+}
+
+// 装备砖块
+message ReqEquipBlockSlot {
+  enum N{
+    zero = 0;
+    OpCode = 20023;
+  }
+  int32 slot = 1;     // 砖块位置
+  int64 blockId = 2;  // 砖块ID
+}
+
+// 装备指定主题的砖块位数据
+message EquipTopicBlockSlots {
+
+  enum N{
+    zero = 0;
+    OpCode = 20028;
+  }
+  int32 topic = 1;
+}
+
+
+
+message  SendAward{
+  enum N{
+    zero = 0;
+    OpCode = 20040;
+  }
+  string userId = 1; // 用户uid
+  repeated protocol.Item Item =2;
+  protocol.MailData mailData = 3; //邮件详情
+}
+
+// 请求活动配置数据
+message C2LS_GetActivityStatus {
+  enum N{
+    zero = 0;
+    OpCode = 30100;
+  }
+}
+
+// 告诉服务器使用指定的道具
+message C2LS_DailyMatch_UseItem{
+  // 定义消息 Id
+  enum N{
+    zero = 0;
+    OpCode = 30105;
+  }
+
+  string matchToken = 1;          // 本次比赛的 token, 来自于 PS2C_DailyMatch_Start 后续的消息需要带上它
+  protocol.ECrushModeItemType itemId = 2;  // 使用的道具 Id
+}
+
+// 设置玩家自己的 AdCode
+message C2LS_SetAdCode{
+  enum N{
+    zero = 0;
+    OpCode= 30106;
+  }
+
+  string adCode = 1;  // 设置玩家的 AdCode
+}
+
+// 获得玩家自己的 AdCode
+message C2LS_GetAdCode{
+  enum N{
+    zero = 0;
+    OpCode= 30107;
+  }
+}
+
+// 获取玩家基本信息
+message C2LS_UserBaseInfo{
+  enum N{
+    zero = 0;
+    OpCode = 30108;
+  }
+  bool isAdUser = 1; // 是否是广告用户
+}
+
+// 请求开局小游戏
+message C2LS_Start_Game{
+  enum N{
+    zero = 0;
+    OpCode = 30109;
+  }
+  int32 stageId = 1; // 关卡 id (废弃)
+  string mapId = 2; // 地图 id
+  int32 clientVer = 3; // 客户端版本
+}
+
+// 玩家操作
+message Operation{
+  int32 holeId = 1; // 洞 id
+  float holeWorldPosX = 2; // 洞世界坐标 x
+  float holeWorldPosY = 3; // 洞世界坐标 y
+  float CameraLocalEulerZ = 4; // 摄像机本地 euler z
+  float OperationTimestamp = 5; // 操作时间
+}
+
+// 玩家操作日志
+message GameOperationLog{
+  int32 version = 1; // 日志版本号
+  int32 seed = 2;  // 当前关卡的种子
+  string mapId = 3; // 地图 id
+  repeated Operation operations = 4; // 操作
+}
+
+// 上报日志信息
+message MatchLogData{
+  int32 version = 1;          // 日志版本号
+  bytes log = 2;              // 日志内容
+}
+
+// 告诉服务器游戏结束 请求结算
+message C2LS_End_Game{
+  enum N{
+    zero = 0;
+    OpCode = 30110;
+  }
+  string matchToken = 1;   // 开局比赛token,用于校验是否是同一场比赛
+  int32 stageId = 2;   //  关卡 id
+  int32 matchSeed = 3; // 当前关卡的种子
+  int32 process = 4; // 比赛进度 （100说明胜利）
+  MatchLogData matchLogData = 5; // 比赛日志数据 -- 老版本日志
+}
+
+// 设置玩家引导状态
+message C2LS_SetGuide{
+  enum N{
+    zero = 0;
+    OpCode = 30111;
+  }
+  int32 guideType = 1; // 引导类型
+  bool isFinish = 2;   // 是否设置完成
+}
+
+// 分享获取道具
+message C2LS_Share{
+  enum N{
+    zero = 0;
+    OpCode = 30112;
+  }
+  protocol.ECrushModeItemType itemType = 1; // 道具类型
+  string matchToken = 2; // 开局比赛token,用于校验是否是同一场比赛
+}
+
+// 设置通过引导关卡
+message C2LS_SetGuideFinish{
+  enum N{
+    zero = 0;
+    OpCode = 30113;
+  }
+}
+
+// 设置通过新人关卡
+message C2LS_SetNewbieFinish{
+  enum N{
+    zero = 0;
+    OpCode = 30114;
+  }
+  int32 matchSeed = 1; // 当前关卡的种子
+}
+
+// 开始新人关卡
+message C2LS_StartNewbie{
+  enum N{
+    zero = 0;
+    OpCode = 30115;
+  }
+}
+
+// 告诉服务器游戏结束 请求结算
+message C2LS_End_Game_V2{
+  enum N{
+    zero = 0;
+    OpCode = 30116;
+  }
+  string matchToken = 1;   // 开局比赛token,用于校验是否是同一场比赛
+  int32 stageId = 2;   //  关卡 id（废弃）
+  int32 matchSeed = 3; // 当前关卡的种子
+  int32 process = 4; // 比赛进度 （100说明胜利）
+  MatchLogData matchLogData = 5; // 比赛日志数据
+  GameOperationLog gameOperationLog = 6; // 玩家上报操作日志
+  string mapId = 7; // 地图 id
+}
+
+// 设置是否授权
+message C2LS_SetAuthorize{
+  enum N{
+    zero = 0;
+    OpCode = 30117;
+  }
+  bool isAuthorized = 1; // 是否授权
+}
+
+// 获取装扮收藏信息
+message C2LS_GetDressUpInfo{
+  enum N{
+    zero = 0;
+    OpCode = 30118;
+  }
+}
+
+// 查看皮肤 （消除红点）
+message C2LS_ViewSkins{
+  enum N{
+    zero = 0;
+    OpCode = 30119;
+  }
+  repeated int32 skinType = 1; // 查看的皮肤类型
+}
+
+// 使用皮肤
+message C2LS_SkinDressUp{
+  enum N{
+    zero = 0;
+    OpCode = 30120;
+  }
+  repeated int32 skinIds = 1; // 使用的皮肤 id
+}
+
+// 上传同步玩家账号信息
+message C2LS_SyncAccountInfo{
+  enum N{
+    zero = 0;
+    OpCode = 30121;
+  }
+  string nickname = 1; // 账号昵称
+  string avatar = 2; // 账号头像
+  string openId = 3; // 账号 OpenId
+  string adCode = 4; // 地区代码
+  int32 platform = 5; // 平台
+}
+
+// 获取话题 pk 活动数据
+message C2LS_GetTopicActivity{
+  enum N{
+    zero = 0;
+    OpCode = 30122;
+  }
+}
+
+// 选取阵营
+message C2LS_SelectCamp{
+  enum N{
+    zero = 0;
+    OpCode = 30123;
+  }
+  protocol.ECamp camp = 1; // 阵营
+}
+
+// 领取话题 pk 活动奖励
+message C2LS_ClaimTopicActivityAward{
+  enum N{
+    zero = 0;
+    OpCode = 30124;
+  }
+  int32 id = 1; // battle path 的 id
+}
+
+// 设置活动Flags
+message C2LS_SetActivityFlag {
+  enum N{
+    zero = 0;
+    OpCode = 30125;
+  }
+  int32 activityId = 1;
+  int32 flag = 2;
+}
+
+// 话题活动获取结算信息
+message C2LS_GetTopicActivitySettle{
+  enum N{
+    zero = 0;
+    OpCode = 30126;
+  }
+}
+
+// 分享加入女团
+message C2LS_ShareJoinGroup{
+  enum N{
+    zero = 0;
+    OpCode = 30127;
+  }
+  string uid = 1; // 分享的用户 uid
+}
+
+// 获取女团列表
+message C2LS_GetGroupMembers{
+  enum N{
+    zero = 0;
+    OpCode = 30128;
+  }
+}
+
+// 移除女团成员
+message C2LS_RemoveGroupMember{
+  enum N{
+    zero = 0;
+    OpCode = 30129;
+  }
+  string uid = 1; // 要移除的 uid
+}
+
+// 皮肤赠送
+message C2LS_GiveSkin{
+  enum N{
+    zero = 0;
+    OpCode = 30130;
+  }
+  int32 skinId    = 1; // 皮肤 uid
+}
+
+// 获取被赠送的皮肤（点击分享链接触发）
+message C2LS_GetGiftSkin{
+  enum N{
+    zero = 0;
+    OpCode = 30131;
+  }
+  string shareCode = 1; // 赠送码, 用于分享链接
+}
+
+// 收取赠送的皮肤
+message C2LS_CollectGiftSkin{
+  enum N{
+    zero = 0;
+    OpCode = 30132;
+  }
+  bool isAccept = 1; // 是否接受
+  string shareCode = 2; // 赠送码, 用于分享链接
+}
+
+// 获取通知列表
+message C2LS_GetNoticeList{
+  enum N{
+    zero = 0;
+    OpCode = 30133;
+  }
+}
+
+// 标记通知已读
+message C2LS_ReadNotice{
+  enum N{
+    zero = 0;
+    OpCode = 30134;
+  }
+  repeated string noticeIds = 1; // 已播放的通知 id
+}
+
+// 获取赠送中的皮肤列表
+message C2LS_GetGivingSkinGifts{
+  enum N{
+    zero = 0;
+    OpCode = 30135;
+  }
+}
+
+// 撤回赠送
+message C2LS_RevokeGivingSkinGift{
+  enum N{
+    zero = 0;
+    OpCode = 30136;
+  }
+  string itemUid = 1; // 赠送皮肤 uid
+}
+
+// 获得指定免费皮肤
+message C2LS_GetOfficialFreeSkin{
+  enum N{
+    zero = 0;
+    OpCode = 30137;
+  }
+}
+
+// 新皮肤赠送
+message C2LS_GiveSkin_V2{
+  enum N{
+    zero = 0;
+    OpCode = 30138;
+  }
+  int32 skinId = 1; // 皮肤 uid
+}
+
+// 皮肤赠送确认
+message C2LS_GiveSkinConfirm{
+  enum N{
+    zero = 0;
+    OpCode = 30139;
+  }
+  string shareCode = 1; // 赠送码, 用于分享链接
+}
+
+////////////////////////// 邮件相关消息 start //////////////////////////
+// 请求邮件列表
+message C2LS_MailGetList {
+  enum N{
+    zero = 0;
+    OpCode = 30140;
+  }
+}
+
+// 领取邮件奖励
+message C2LS_MailClaimAttachment {
+  enum N{
+    zero = 0;
+    OpCode = 30141;
+  }
+  string mailId = 1;  // 邮件ID
+}
+
+// 标记邮件已读
+message C2LS_MailMarkRead {
+  enum N{
+    zero = 0;
+    OpCode = 30142;
+  }
+  string mailId = 1;  // 邮件ID
+}
+
+// 删除邮件
+message C2LS_MailDelete {
+  enum N{
+    zero = 0;
+    OpCode = 30143;
+  }
+  string mailId = 1;  // 邮件ID
+}
+////////////////////////// 邮件相关消息 end //////////////////////////

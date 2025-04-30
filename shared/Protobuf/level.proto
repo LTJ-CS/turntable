@@ -1,0 +1,172 @@
+syntax = "proto3";
+package ClientProto;
+option go_package = "./protobuf;protobuf";
+import "common.proto";
+
+
+// 关卡相关，消息ID范围[10201 ~ 10400]  
+
+
+
+// 大厅关卡数据
+message LevelsInfo {
+  repeated LevelInfo levels = 1; // 已解锁关卡
+  repeated int32 chapterIds = 2; // 已解锁章节ID
+}
+
+// 关卡信息
+message LevelInfo {
+  int32 id = 1; // 配置ID
+  int32 star = 2; // 星星数
+  int64 accumulatedScore = 3; // 累计得分
+  int64 historyScore = 4; // 历史最高分
+  int32 souvenirCount = 5; // 纪念品个数
+
+  repeated RankPlayerInfo ranks = 10; //获得完所有纪念品后只发送前3名的排行
+}
+
+// 关卡失败类型
+enum LevelFailType{
+  None = 0;
+  ReturnLobby = 1; // 退回大厅
+  KillProcess = 2; // 杀进程(服务器检测)
+}
+
+// 解锁关卡
+message LevelUnlockRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10203;
+  }
+  int32 id = 1; //关卡ID
+}
+// 解锁关卡
+message LevelUnlockResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10204;
+  }
+  enum ErrorCode{
+    Success = 0;
+    LevelIdError = 1;
+    GoldNotEnough = 2;
+    AlreadyUnlock = 3;
+  }
+  ErrorCode errorCode = 1;
+  repeated ItemInfo finalItems = 2; // 消耗后剩余的道具，用于客户端同步数据
+}
+
+// 进入关卡
+message LevelEnterRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10201;
+  }
+  int32 id = 1; //关卡ID
+}
+// 进入关卡
+message LevelEnterResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10202;
+  }
+  enum ErrorCode{
+    Success = 0;
+    LevelIdError = 1;
+    EnergyNotEnough = 2;
+    LevelNoUnlock = 3;
+  }
+  ErrorCode errorCode = 1;
+  repeated ItemInfo finalItems = 2; // 消耗后剩余的道具，用于客户端同步数据  
+  int32 levelStar = 3; // 关卡5星后，服务器随机星级
+  map<int32, int32> boxCounts = 4; // 随机获得宝箱数量 key 1,2,3为对应级别的宝箱，值为数量
+  int64 energyRecoverTime = 5; //上次体力恢复时间 s
+}
+
+// 关卡事件信息
+message LevelEventInfo {
+  enum EventType{
+    ClickSuccess = 0; // 点击成功
+    ClickFail = 1; // 点击失败
+    Pause = 2; // 暂停
+    Resume = 3; // 恢复
+    Tips = 4; // 提示
+    Start = 5; // 开始
+    ErrorClickWaitCount = 6; // 错误点击等待
+  }
+  EventType type = 1; // 事件类型
+  int64 time = 2; // 时间戳 ms
+  int32 difficulty = 3; // 点击物品的难度 0开始
+  int32 comboCount = 4; // 连击次数
+}
+
+// 关卡结束
+message LevelFinishRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10205;
+  }
+  repeated LevelEventInfo events = 1; // 关卡事件日志列表
+  int32 souvenirCount = 2; // 纪念品个数
+}
+// 关卡结束
+message LevelFinishResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10206;
+  }
+  enum ErrorCode{
+    Success = 0;
+    LevelNotFind = 1;
+    TimeNotInStartAndEnd = 2;
+    ComboCountError = 3;
+    ClickSuccessItemIdRepeat = 4;
+    ClickSuccessCountError = 5;
+  }
+  ErrorCode errorCode = 1;
+  repeated ItemInfo finalItems = 2; // 最终道具，用于客户端同步数据
+  int64 score = 3; // 得分
+  LevelInfo levelInfo = 4; //当前关卡信息
+  repeated ItemInfo rewards = 5; // 奖励道具
+  repeated RankPlayerInfo ranks = 6; //排行信息
+  repeated int64 detailScores = 7; // 详细得分，分别为：基础、精确度、时间、提示 
+  int32 historyRank = 8; // 上一次历史最好排名
+}
+
+// 关卡失败
+message LevelFailRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10207;
+  }
+  LevelFailType failType = 1; // 失败类型
+}
+// 关卡失败
+message LevelFailResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10208;
+  }
+}
+
+// 解锁章节
+message LevelChapterUnlockRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10209;
+  }
+  int32 chapterId = 1; // 章节ID
+}
+// 解锁章节
+message LevelChapterUnlockResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10210;
+  }
+  enum ErrorCode{
+    Success = 0;
+    ChapterIdError = 1;
+  }
+  ErrorCode errorCode = 1;
+}
+

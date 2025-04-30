@@ -1,0 +1,81 @@
+syntax = "proto3";
+package ClientProto;
+option go_package = "./protobuf;protobuf";
+import "common.proto";
+
+
+// 活动相关，消息ID范围[10401 ~ 10800]  
+
+// 活动数据请求 
+message ActivityDataRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10405;
+  }
+}
+// 活动数据返回 
+// 未开启的活动信息可能为空
+message ActivityDataResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10406;
+  }
+  ActivityEnergySupplyInfo energySupplyInfo = 1; // 体力补给
+}
+
+
+
+
+//--------------------体力补给----------------------
+
+// 体力补给信息
+message  ActivityEnergySupplyInfo {
+  bool shared = 1; // 是否已分享
+}
+
+// 体力补给奖励领取 mark 暂时无限领取
+message ActivityEnergySupplyRewardGetRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10401;
+  }
+}
+// 体力补给奖励领取 
+message ActivityEnergySupplyRewardGetResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10402;
+  }
+  enum ErrorCode{
+    Success = 0;
+    ConfigError = 1;
+  }
+  ErrorCode errorCode = 1;
+  repeated ItemInfo items = 2; // 获得的奖励
+  repeated ItemInfo finalItems = 3; // 领奖后的道具，用于客户端同步数据
+}
+
+
+//--------------------金币补给----------------------
+
+// 金币补给奖励领取 mark 暂时无限领取
+message ActivityGoldSupplyRewardGetRequest {
+  enum N{
+    zero = 0;
+    OpCode = 10403;
+  }
+}
+// 金币补给奖励领取 
+message ActivityGoldSupplyRewardGetResponse {
+  enum N{
+    zero = 0;
+    OpCode = 10404;
+  }
+  enum ErrorCode{
+    Success = 0;
+    ConfigError = 1;
+  }
+  ErrorCode errorCode = 1;
+  repeated ItemInfo items = 2; // 获得的奖励
+  repeated ItemInfo finalItems = 3; // 领奖后的道具，用于客户端同步数据
+}

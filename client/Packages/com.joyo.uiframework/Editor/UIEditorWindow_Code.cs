@@ -1,0 +1,155 @@
+using System;
+using System.Collections;
+using System.IO;
+using Editor.Scripts.Helper;
+using UIFramework;
+using UIFramework.Components;
+using UIFramework.Extensions;
+using UIFramework.UIScreen;
+using Unity.EditorCoroutines.Editor;
+using UnityEditor;
+using UnityEditor.Compilation;
+using UnityEngine;
+using UnityEngine.UI;
+namespace Editor
+{
+    /// <summary>
+    /// 在这文件中实现与代码自动生成相关的逻辑
+    /// </summary>
+    public partial class UIEditorWindow
+    {
+        private const string ScreenViewGenerateTaskName = "UI_Task_ScreenViewGenerate";
+        
+        
+        /// <summary>
+        /// 用于继续需要编译代码后才能进行的任务, 如生成 UI Screen 的 View 必须要编译后才能添加到 GameObject 上
+        /// </summary>
+        [InitializeOnLoadMethod]
+        static void CodeTaskAutoContinue()
+        {
+            var screenName = Environment.GetEnvironmentVariable(ScreenViewGenerateTaskName);
+            if (!string.IsNullOrEmpty(screenName))
+            {
+                EditorCoroutineUtility.StartCoroutineOwnerless(AutoGenerateScreenView(screenName));
+            }
+        }
+
+        /// <summary>
+        /// 继续一个 UIScreen 的 View 的生成任务
+        /// </summary>
+        /// <param name="screenName">UIScreen 的名称</param>
+        public static void ContinueScreenViewGenerateTask(string screenName)
+        {
+            Environment.SetEnvironmentVariable(ScreenViewGenerateTaskName, screenName);
+        }
+
+        /// <summary>
+        /// 自动生成
+        /// </summary>
+        /// <param name="screenName"></param>
+        private static IEnumerator AutoGenerateScreenView(string screenName)
+        {
+            Environment.SetEnvironmentVariable(ScreenViewGenerateTaskName, null);
+            yield return null;  // 等待一帧再处理, 免得Unity 有些内容还没有初始化完成
+
+            // 创建 Screen 的资源目录
+            CreateUIScreenDirectory(screenName);
+
+            var screenViewClassName = UIFrameworkSettings.GetScreenViewClassName(screenName);
+            
+            string typeName = $"{UIFrameworkSettings.UINamespace}.{screenViewClassName}";
+            Type screenViewType = null;
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                screenViewType = assembly.GetType(typeName);
+                if (screenViewType != null)
+                    break;
+            }
+            
+            if (screenViewType == null)
+            {
+                UnityTipsHelper.ShowError($"创建 Screen 时找不到自动生成的 View 的类({screenViewClassName})请查看日志确认原因");
+                yield break;
+            }
+
+            var screenObject = new GameObject(screenName);
+            screenObject.AddComponent(screenViewType);
+            var screenViewInfoInEditor = screenObject.AddComponent<ScreenViewInfoInEditor>();
+            
+            var screenRect = screenObject.GetOrAddComponent<RectTransform>();
+            screenObject.GetOrAddComponent<CanvasRenderer>();
+            screenRect.ResetToFullScreen();
+            
+            { // 添加一个参考图的对象
+                var refImageGo = new GameObject("参考图");
+                var refImage = refImageGo.AddComponent<RawImage>();
+                refImageGo.transform.SetParent(screenObject.transform);
+                refImageGo.GetComponent<RectTransform>().ResetToFullScreen();
+                screenViewInfoInEditor.m_ReferenceImage = refImage;
+            }
+            
+            // 设置 Layer
+            screenObject.SetLayerRecursively(LayerMask.NameToLayer("UI"));
+            
+            var basePath          = $"{UIFrameworkSettings.UIProjectResPath}/{screenName}";
+            var sourcePath        = $"{basePath}/{UIFrameworkSettings.UISource}/{UIFrameworkSettings.GetScreenViewSourceName(screenName)}.prefab";
+            
+            // 保存到 Prefab
+            var sourcePrefab = PrefabUtility.SaveAsPrefabAsset(screenObject, sourcePath);
+            DestroyImmediate(screenObject);
+            EditorGUIUtility.PingObject(sourcePrefab);
+            Selection.activeObject = sourcePrefab;
+            
+            UnityTipsHelper.Show($"创建 Screen 成功, 源编辑 Prefab 保存到了 {sourcePath}, View 的类为 {screenViewClassName}");
+        }
+        
+        /// <summary>
+        /// 创建 UI Screen 的 GameObject
+        /// </summary>
+        /// <param name="screenName">指定要生成 View 代码的 Screen 名称</param>
+        /// <returns></returns>
+        private static bool GenerateScreenViewCodeFileAndCompile(string screenName)
+        {
+            var viewCodeFilePath = UIFrameworkSettings.GetScreenViewCodeFilePath(screenName);
+            if (File.Exists(viewCodeFilePath))
+            {
+                if (!EditorUtility.DisplayDialog("UIFramework", $"{screenName} 的 View 类已经存在, 是否覆盖生成? ", "确定", "取消"))
+                {
+                    return false;
+                }
+            }
+            
+            var screenViewClassName = UIFrameworkSettings.GetScreenViewClassName(screenName);
+            
+            // 定义 Screen 的 View 类的自动生成部分的代码
+            var screenViewPartialCode = $@"
+// <auto-generated>
+//     Generated by the ui framework.  DO NOT EDIT!
+//     Remark: 可以另写一个文件来扩展此类来绑定 UI 控件, 实现 UI View 相关的逻辑
+// </auto-generated>
+
+using UIFramework.UIScreen;
+using UnityEngine;
+// ReSharper disable once CheckNamespace
+namespace {UIFrameworkSettings.UINamespace}
+{{
+    /// <summary>
+    /// {screenName} 的 View 类   
+    /// </summary>
+    public sealed partial class {screenViewClassName} : {nameof(UIScreenViewBase)}
+    {{
+        
+    }}
+}}
+";
+
+            // 写入 View 的代码
+            File.WriteAllText(viewCodeFilePath, screenViewPartialCode);
+            
+            AssetDatabase.ImportAsset(viewCodeFilePath);
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+            CompilationPipeline.RequestScriptCompilation();
+            return true;
+        }
+    }
+}

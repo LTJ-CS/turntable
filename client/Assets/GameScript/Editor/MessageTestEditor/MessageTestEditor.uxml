@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:DropdownField label="发送的消息" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="dropDownSendMsg" />
+    <ui:DropdownField label="接收的消息" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="dropDownRecvMsg" />
+    <ui:Button text="生成发送消息" display-tooltip-when-elided="true" name="btnGenMsg" style="height: 20px; width: 114px; left: 30%; top: 10px; right: 50%; -unity-text-align: upper-center; white-space: nowrap;" />
+    <ui:TextField picking-mode="Ignore" label="消息内容" name="txtMsgContent" style="height: 91px; flex-direction: column; top: 10px; justify-content: space-around; width: 346px;" />
+    <ui:Button text="发送消息" display-tooltip-when-elided="true" name="btnSendMsg" enable-rich-text="true" style="height: 22px; width: 115px; bottom: 0; position: relative; left: 30%; top: 10px; right: 50%;" />
+    <ui:TextField picking-mode="Ignore" label="收到的消息" name="txtMsgRecv" readonly="true" multiline="true" style="top: 10px; flex-direction: column; height: 254px; align-items: stretch; justify-content: space-around; white-space: normal;" />
+</ui:UXML>

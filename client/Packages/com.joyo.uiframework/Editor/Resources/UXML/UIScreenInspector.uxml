@@ -1,0 +1,27 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Packages/com.joyo.uiframework/Editor/Resources/Styles/UIScreenInspector.uss" />
+    <ui:VisualElement>
+        <ui:Label text="警告: &#10;不要随便修改本GameObject及 ScreenView 类的名称, 会导致导出失败或资源加载失败" display-tooltip-when-elided="true" enable-rich-text="false" style="color: rgb(255, 85, 85); white-space: normal; margin-left: 0; margin-right: 0; border-left-color: rgb(75, 75, 75); border-right-color: rgb(75, 75, 75); border-top-color: rgb(75, 75, 75); border-bottom-color: rgb(75, 75, 75); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; padding-left: 9px; padding-right: 9px; padding-top: 2px; padding-bottom: 2px;" />
+        <ui:GroupBox>
+            <ui:Foldout text="辅助参考" style="-unity-font-style: bold;">
+                <uie:ObjectField label="参考图" allow-scene-objects="true" type="UnityEngine.GameObject, UnityEngine.CoreModule" focusable="true" binding-path="m_ReferenceImage" name="ReferenceImage" class="unity-disabled" style="-unity-font-style: normal;" />
+                <uie:ObjectField label="导出的 Prefab" allow-scene-objects="false" type="UnityEngine.GameObject, UnityEngine.CoreModule" focusable="false" binding-path="m_RunTimePrefab" name="RunTimePrefab" class="unity-disabled" style="-unity-font-style: normal;" />
+            </ui:Foldout>
+            <ui:Foldout text="UI 属性" style="-unity-font-style: bold;">
+                <uie:EnumField label="UILayer" value="Layer" binding-path="m_Layer" name="UILayer" style="-unity-font-style: normal;" />
+                <uie:EnumField label="ScreenType" binding-path="m_ScreenType" name="ScreenType" style="-unity-font-style: normal;" />
+                <ui:GroupBox style="margin-top: 0; margin-bottom: 0; padding-left: 0; padding-top: 0; padding-bottom: 0; margin-left: 7px;">
+                    <uie:EnumField label="背景显示" value="Center" binding-path="m_BackgroundShowShowType" name="BackgroundShowType" style="-unity-font-style: normal;" />
+                    <uie:ColorField label="背景颜色" value="RGBA(0.000, 1.000, 1.000, 1.000)" name="CustomBackgroundColor" binding-path="m_CustomBackgroundColor" style="-unity-font-style: normal;" />
+                    <uie:EnumField label="背景点击事件" value="Center" binding-path="m_Behaviour.m_BackgroundClickEventType" name="BackgroundClickEventType" style="-unity-font-style: normal;" />
+                    <uie:PropertyField name="CustomClickEvent" label="回调函数" binding-path="m_BackgroundClickEventCallback" tooltip="自定义背景点击事件回调函数" style="margin-left: 20px; margin-top: 3px;" />
+                </ui:GroupBox>
+                <uie:EnumField label="ESC 按钮事件" value="Center" binding-path="m_Behaviour.m_EscPressEventType" name="EscPressEventType" style="-unity-font-style: normal;" />
+                <uie:EnumField label="打开动画播放模式" value="Center" binding-path="m_Behaviour.m_OpenAnimPlayMode" name="OpenAnimPlayMode" style="-unity-font-style: normal;" />
+                <uie:EnumField label="关闭动画播放模式" value="Center" binding-path="m_Behaviour.m_CloseAnimPlayMode" name="CloseAnimPlayMode" style="-unity-font-style: normal;" />
+            </ui:Foldout>
+            <ui:IMGUIContainer name="ImguiContainer" focusable="false" />
+        </ui:GroupBox>
+        <ui:Button text="导出" display-tooltip-when-elided="false" name="Export" tooltip="为 UI 导出运行时需要的 Prefab 与 代码" focusable="false" enable-rich-text="false" class="btn btn-success" style="-unity-font-style: bold; font-size: 20px; margin-top: 5px; border-radius: 5px;" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement name="RowTemplate" style="background-image: none; width: auto; height: auto; align-items: center; justify-content: flex-start; flex-direction: row; -unity-text-align: middle-left; flex-shrink: 0;">
+        <ui:VisualElement style="background-image: resource(&apos;Icons/ico_alert&apos;); height: 12px; width: 12px;" />
+        <ui:Label text="Label" display-tooltip-when-elided="false" name="labelErrorDesc" enable-rich-text="false" focusable="false" style="-unity-text-align: middle-left;" />
+    </ui:VisualElement>
+</ui:UXML>
