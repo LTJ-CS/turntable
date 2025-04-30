@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "num": 1,
+    "addCardBox": 1,
+    "Score": 10
+  },
+  {
+    "id": 2,
+    "num": 2,
+    "addCardBox": 1,
+    "Score": 10
+  },
+  {
+    "id": 3,
+    "num": 3,
+    "addCardBox": 3,
+    "Score": 20
+  },
+  {
+    "id": 4,
+    "num": 4,
+    "addCardBox": 5,
+    "Score": 50
+  },
+  {
+    "id": 5,
+    "num": 5,
+    "addCardBox": 8,
+    "Score": 80
+  },
+  {
+    "id": 6,
+    "num": 6,
+    "addCardBox": 12,
+    "Score": 120
+  },
+  {
+    "id": 7,
+    "num": 7,
+    "addCardBox": 20,
+    "Score": 200
+  },
+  {
+    "id": 8,
+    "num": 8,
+    "addCardBox": 30,
+    "Score": 300
+  },
+  {
+    "id": 9,
+    "num": 8,
+    "addCardBox": 10,
+    "Score": 100
+  }
+]
