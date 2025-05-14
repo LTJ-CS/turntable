@@ -11,8 +11,8 @@ dotnet $LUBAN_DLL \
         -d json \
         -c cs-simple-json \
         --conf $WORKSPACE/luban/luban.conf \
-        -x outputDataDir=../turntable/client/assets/GameRes/Runtime/ConfigData \
-        -x outputCodeDir=../turntable/client/assets/GameScript/Runtime/ConfigScript
+        -x outputDataDir=../client/assets/GameRes/Runtime/ConfigData \
+        -x outputCodeDir=../client/assets/GameScript/Runtime/ConfigScript
 echo "\n【生成客户端使用的数据表】结束"
 
 if [ -d "../screw-puzzle-server-orleans" ]; then

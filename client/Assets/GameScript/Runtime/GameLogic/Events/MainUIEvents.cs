@@ -66,17 +66,6 @@ namespace GameScript.Runtime.GameLogic.Events
         {
             UpdateSkinRedDot?.Invoke();
         }
-
-        /// <summary>
-        /// 更新装扮中皮肤选中状态
-        /// </summary>
-        public static event Action<EDressType, int> UpdateSkinSelected;
-
-        public static void RiseUpdateSkinSelected(EDressType type, int itemId)
-        {
-            UpdateSkinSelected?.Invoke(type, itemId);
-        }
-
         /// <summary>
         /// 播放主界面退出效果
         /// </summary>

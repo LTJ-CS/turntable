@@ -208,6 +208,11 @@ MonoBehaviour:
   m_InEditMode: 0
   clickid: 
   m_GuideList: 
+  m_Tags:
+  - 
+  - 
+  ClothesColor: {r: 1, g: 1, b: 1, a: 1}
+  PantsColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &327934069
 Transform:
   m_ObjectHideFlags: 0
@@ -1508,7 +1513,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1538,7 +1543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SpriteImage: {fileID: 4900000, guid: 972d34c50c3a94306bc594de4a84405e, type: 3}
-  m_SpriteType: 0
+  m_SpriteType: 2
 --- !u!1 &1633099242
 GameObject:
   m_ObjectHideFlags: 0

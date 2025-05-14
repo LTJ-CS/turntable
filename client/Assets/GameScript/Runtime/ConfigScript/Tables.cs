@@ -14,44 +14,23 @@ namespace ClientCfg
 {
 public partial class Tables
 {
-    public cfg.GDLanguage GDLanguage {get; }
-    public cfg.GDJourneyLevel GDJourneyLevel {get; }
-    public cfg.GDJourneyStar GDJourneyStar {get; }
-    public cfg.GDJourneyScore GDJourneyScore {get; }
-    public cfg.GDJourneyCommon GDJourneyCommon {get; }
-    public cfg.GDJourneyItem GDJourneyItem {get; }
-    public cfg.GDJourneyChapter GDJourneyChapter {get; }
-    public cfg.GDJourneyFunction GDJourneyFunction {get; }
-    public cfg.GDJourneyCucolorisLevel GDJourneyCucolorisLevel {get; }
-    public cfg.GDJourneyCucolorisLevelStep GDJourneyCucolorisLevelStep {get; }
+    public cfg.GDCommon GDCommon {get; }
+    public cfg.GDCardColor GDCardColor {get; }
+    public cfg.GDCardScore GDCardScore {get; }
 
     public Tables(System.Func<string, JSONNode> loader)
     {
-        GDLanguage = new cfg.GDLanguage(loader("cfg_gdlanguage"));
-        GDJourneyLevel = new cfg.GDJourneyLevel(loader("cfg_gdjourneylevel"));
-        GDJourneyStar = new cfg.GDJourneyStar(loader("cfg_gdjourneystar"));
-        GDJourneyScore = new cfg.GDJourneyScore(loader("cfg_gdjourneyscore"));
-        GDJourneyCommon = new cfg.GDJourneyCommon(loader("cfg_gdjourneycommon"));
-        GDJourneyItem = new cfg.GDJourneyItem(loader("cfg_gdjourneyitem"));
-        GDJourneyChapter = new cfg.GDJourneyChapter(loader("cfg_gdjourneychapter"));
-        GDJourneyFunction = new cfg.GDJourneyFunction(loader("cfg_gdjourneyfunction"));
-        GDJourneyCucolorisLevel = new cfg.GDJourneyCucolorisLevel(loader("cfg_gdjourneycucolorislevel"));
-        GDJourneyCucolorisLevelStep = new cfg.GDJourneyCucolorisLevelStep(loader("cfg_gdjourneycucolorislevelstep"));
+        GDCommon = new cfg.GDCommon(loader("cfg_gdcommon"));
+        GDCardColor = new cfg.GDCardColor(loader("cfg_gdcardcolor"));
+        GDCardScore = new cfg.GDCardScore(loader("cfg_gdcardscore"));
         ResolveRef();
     }
     
     private void ResolveRef()
     {
-        GDLanguage.ResolveRef(this);
-        GDJourneyLevel.ResolveRef(this);
-        GDJourneyStar.ResolveRef(this);
-        GDJourneyScore.ResolveRef(this);
-        GDJourneyCommon.ResolveRef(this);
-        GDJourneyItem.ResolveRef(this);
-        GDJourneyChapter.ResolveRef(this);
-        GDJourneyFunction.ResolveRef(this);
-        GDJourneyCucolorisLevel.ResolveRef(this);
-        GDJourneyCucolorisLevelStep.ResolveRef(this);
+        GDCommon.ResolveRef(this);
+        GDCardColor.ResolveRef(this);
+        GDCardScore.ResolveRef(this);
     }
 }
 
