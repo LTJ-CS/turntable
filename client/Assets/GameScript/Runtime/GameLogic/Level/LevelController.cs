@@ -73,6 +73,10 @@ namespace GameScript.Runtime.GameLogic.Level
             return _resultList;
         }
 
+        public int GetLuckyColor()
+        {
+            return _luckyColor.Id;
+        }
 
         /// <summary>
         /// 初始化关卡数据
@@ -91,6 +95,7 @@ namespace GameScript.Runtime.GameLogic.Level
 
             _luckyColor = _cardColors[Random.Range(0, _cardColors.Count)];
             CardPackNum = 20;
+            ResetTable();
         }
 
         /// <summary>
@@ -109,7 +114,6 @@ namespace GameScript.Runtime.GameLogic.Level
             CardPackNum -= cost;
             //重置数据
             _cardLogs.Clear();
-            ResetTable();
             //计算得出这次转盘所有颜色
             GetRandomIdListByWeight();
         }

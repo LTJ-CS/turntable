@@ -19,6 +19,7 @@ namespace MyUI
         [SerializeField] private TextMeshProUGUI m_PackText;
         [SerializeField] private TextMeshProUGUI m_ScoreText;
         [SerializeField] private List<CardItem>  m_CardItems;
+        [SerializeField] private CardItem        m_LuckyCard;
         [SerializeField] private List<Sprite>    m_CardSprites;
 
         private LevelController _levelController;
@@ -39,6 +40,7 @@ namespace MyUI
             _levelController.Init();
             m_PackText.text = _levelController.CardPackNum + "个卡包";
             m_ScoreText.text = _levelController.CardScoreNum + "分";
+            m_LuckyCard.SetImage(m_CardSprites[_levelController.GetLuckyColor() - 1]);
         }
 
         /// <summary>
